@@ -1,5 +1,6 @@
 package com.bkav.device_mag_backend.repository.DAO.interfaces;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -22,13 +23,13 @@ public interface IDAO<T, ID> {
     List<T> findAll();
 
     @Transactional(readOnly = true)
-    Page<T> findAll(Pageable pageable);
+    List<T> findAll(Pageable pageable);
 
     @Transactional(readOnly = true)
     List<T> findAll(Sort sort);
 
     @Transactional
-    void deleteAll(Iterable<T> entities);
+    void deleteAll(List<Optional<T>> entities);
 
     // Additional methods as needed
 }

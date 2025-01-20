@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class UserDaoImpl implements IUserDAO {
     }
 
     @Override
-    public Iterable<User> findAll() {
+    public List<Optional<User>> findAll() {
         return userRepository.findAll();
     }
 
