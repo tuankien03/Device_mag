@@ -26,6 +26,7 @@ public class UserDaoImpl implements IUserDAO {
 
     @Override
     public User save(User user) {
+
         return userRepository.save(user);
     }
 
@@ -53,7 +54,6 @@ public class UserDaoImpl implements IUserDAO {
     public Iterable<User> findAll(Sort sort) {
         return userRepository.findAll(sort);
     }
-
 
     @Override
     public void deleteAll(Iterable<User> entities) {
