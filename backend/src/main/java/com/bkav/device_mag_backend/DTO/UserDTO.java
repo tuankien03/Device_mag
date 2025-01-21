@@ -3,7 +3,6 @@ package com.bkav.device_mag_backend.DTO;
 import com.bkav.device_mag_backend.entity.User;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data

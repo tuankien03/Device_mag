@@ -17,19 +17,10 @@ public interface IDAO<T, ID> {
     void delete(T t);
 
     @Transactional(readOnly = true)
-    Optional<T> findById(ID id);
+    T findById(ID id);
 
     @Transactional(readOnly = true)
     List<T> findAll();
-
-    @Transactional(readOnly = true)
-    List<T> findAll(Pageable pageable);
-
-    @Transactional(readOnly = true)
-    List<T> findAll(Sort sort);
-
-    @Transactional
-    void deleteAll(List<Optional<T>> entities);
 
     // Additional methods as needed
 }

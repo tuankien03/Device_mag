@@ -1,4 +1,4 @@
-package com.bkav.device_mag_backend.service;
+package com.bkav.device_mag_backend.service.interfaces;
 
 import java.util.List;
 
