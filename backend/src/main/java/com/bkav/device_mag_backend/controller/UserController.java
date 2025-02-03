@@ -1,7 +1,7 @@
 package com.bkav.device_mag_backend.controller;
 
 import Constant.CodeStatus;
-import com.bkav.device_mag_backend.model.DTO.response.UserDTO;
+import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.model.entity.User;
 import com.bkav.device_mag_backend.model.DTO.response.ApiResponse;
 import com.bkav.device_mag_backend.service.UserService;
@@ -43,9 +43,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<ApiResponse> saveUser(@RequestBody User request) {
         try {
-            User user = userService.save(request);
-            UserDTO userDTO = new UserDTO(user);
-            return ResponseEntity.ok(new ApiResponse(CodeStatus.CREATED, CodeStatus.CREATED_TEXT, userDTO));
+            UserResponseDTO userResponseDTO = userService.save(request);
+            return ResponseEntity.ok(new ApiResponse(CodeStatus.CREATED, CodeStatus.CREATED_TEXT, userResponseDTO));
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(CodeStatus.BAD_REQUEST, null, e.getMessage()));
         }
@@ -55,8 +54,8 @@ public class UserController {
     public  ResponseEntity<ApiResponse> deleteUser(@PathVariable UUID id) {
         try {
             User user = userService.delete(id);
-            UserDTO userDTO = new UserDTO(user);
-            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userDTO));
+            UserResponseDTO userResponseDTO = new UserResponseDTO(user);
+            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userResponseDTO));
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(CodeStatus.BAD_REQUEST, null, e.getMessage()));
         }

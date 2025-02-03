@@ -2,6 +2,7 @@ package com.bkav.device_mag_backend.service;
 
 
 import com.bkav.device_mag_backend.exception.ResourceNotFoundException;
+import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.repository.DAO.UserDaoImpl;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
@@ -28,7 +29,7 @@ public class UserService implements IUserService {
 
 
     @Override
-    public List<User> findAll() {
+    public List<UserResponseDTO> findAll() {
         return userDaoImpl.findAll();
     }
 

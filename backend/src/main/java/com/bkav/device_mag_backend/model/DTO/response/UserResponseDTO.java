@@ -6,14 +6,14 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class UserDTO  {
+public class UserResponseDTO {
     UUID id;
     String username;
     String role;
     String createdAt;
     String updatedAt;
 
-    public UserDTO(User user) {
+    public UserResponseDTO(User user) {
         this.id = user.getUserId();
         this.username = user.getUsername();
         this.role = user.getRole();
