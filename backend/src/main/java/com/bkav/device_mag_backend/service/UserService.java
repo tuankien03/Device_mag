@@ -3,10 +3,11 @@ package com.bkav.device_mag_backend.service;
 
 import com.bkav.device_mag_backend.exception.ResourceNotFoundException;
 import com.bkav.device_mag_backend.repository.DAO.UserDaoImpl;
+import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bkav.device_mag_backend.entity.User;
+import com.bkav.device_mag_backend.model.entity.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Service
 public class UserService implements IUserService {
 
-    private final UserDaoImpl userDaoImpl;
+    private final IUserDAO userDaoImpl;
 
     @Autowired
     UserService(UserDaoImpl userDaoImpl) {

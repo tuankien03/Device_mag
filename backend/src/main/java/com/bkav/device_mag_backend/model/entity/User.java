@@ -1,4 +1,4 @@
-package com.bkav.device_mag_backend.entity;
+package com.bkav.device_mag_backend.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;

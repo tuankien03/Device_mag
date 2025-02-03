@@ -1,10 +1,11 @@
 package com.bkav.device_mag_backend.controller;
 
 import Constant.CodeStatus;
-import com.bkav.device_mag_backend.DTO.UserDTO;
-import com.bkav.device_mag_backend.entity.User;
-import com.bkav.device_mag_backend.response.ApiResponse;
+import com.bkav.device_mag_backend.model.DTO.response.UserDTO;
+import com.bkav.device_mag_backend.model.entity.User;
+import com.bkav.device_mag_backend.model.DTO.response.ApiResponse;
 import com.bkav.device_mag_backend.service.UserService;
+import com.bkav.device_mag_backend.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserService userService;
+    private final IUserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -24,7 +25,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<ApiResponse> getAllUsers() {
         try {
-            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, userService.findAll(), CodeStatus.SUCCESS_TEXT));
+            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userService.findAll()));
         } catch (Exception e) {
             return ResponseEntity.status(CodeStatus.NOT_FOUND).body(new ApiResponse(CodeStatus.NOT_FOUND, e.getMessage(), CodeStatus.NOT_FOUND_TEXT));
         }
@@ -33,7 +34,7 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse> getUser(@PathVariable UUID id) {
         try {
-            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, userService.findById(id), CodeStatus.SUCCESS_TEXT));
+            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userService.findById(id)));
         } catch (Exception e) {
             return ResponseEntity.status(CodeStatus.NOT_FOUND).body(new ApiResponse(CodeStatus.NOT_FOUND, e.getMessage(), CodeStatus.NOT_FOUND_TEXT));
         }
@@ -44,7 +45,7 @@ public class UserController {
         try {
             User user = userService.save(request);
             UserDTO userDTO = new UserDTO(user);
-            return ResponseEntity.ok(new ApiResponse(CodeStatus.CREATED, userDTO, CodeStatus.CREATED_TEXT));
+            return ResponseEntity.ok(new ApiResponse(CodeStatus.CREATED, CodeStatus.CREATED_TEXT, userDTO));
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(CodeStatus.BAD_REQUEST, null, e.getMessage()));
         }
@@ -55,7 +56,7 @@ public class UserController {
         try {
             User user = userService.delete(id);
             UserDTO userDTO = new UserDTO(user);
-            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, userDTO, CodeStatus.SUCCESS_TEXT));
+            return ResponseEntity.ok(new ApiResponse(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userDTO));
         } catch (Exception e) {
             return ResponseEntity.ok(new ApiResponse(CodeStatus.BAD_REQUEST, null, e.getMessage()));
         }

@@ -1,4 +1,4 @@
-package com.bkav.device_mag_backend.request;
+package com.bkav.device_mag_backend.model.DTO.request;
 
 import lombok.Data;
 

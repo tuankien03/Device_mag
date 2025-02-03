@@ -1,6 +1,6 @@
-package com.bkav.device_mag_backend.DTO;
+package com.bkav.device_mag_backend.model.DTO.response;
 
-import com.bkav.device_mag_backend.entity.User;
+import com.bkav.device_mag_backend.model.entity.User;
 import lombok.Data;
 
 import java.util.UUID;

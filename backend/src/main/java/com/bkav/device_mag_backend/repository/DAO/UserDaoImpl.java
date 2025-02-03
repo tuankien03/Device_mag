@@ -1,6 +1,6 @@
 package com.bkav.device_mag_backend.repository.DAO;
 
-import com.bkav.device_mag_backend.entity.User;
+import com.bkav.device_mag_backend.model.entity.User;
 import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.exception.ResourceNotFoundException;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
