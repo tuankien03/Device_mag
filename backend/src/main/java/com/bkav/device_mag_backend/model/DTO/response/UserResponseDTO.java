@@ -1,6 +1,7 @@
 package com.bkav.device_mag_backend.model.DTO.response;
 
 import com.bkav.device_mag_backend.model.entity.User;
+import com.bkav.device_mag_backend.model.entity.UserRole;
 import lombok.Data;
 
 import java.util.UUID;
@@ -9,7 +10,7 @@ import java.util.UUID;
 public class UserResponseDTO {
     UUID id;
     String username;
-    String role;
+    UserRole role;
     String createdAt;
     String updatedAt;
 
