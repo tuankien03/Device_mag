@@ -8,6 +8,5 @@ import java.awt.print.Pageable;
 
 
 public interface IUserDeviceViewDAO {
-    public Page<UserResponseDTO> getAllUsers(Pageable pageable, Size size);
     public UserResponseDTO getUserById(Long id);
 }

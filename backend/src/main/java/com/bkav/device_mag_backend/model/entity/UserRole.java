@@ -3,6 +3,7 @@ package com.bkav.device_mag_backend.model.entity;
 import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Data;
 
 public enum UserRole {
     ADMIN("ADMIN"),

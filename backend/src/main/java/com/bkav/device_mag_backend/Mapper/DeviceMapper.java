@@ -7,6 +7,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface DeviceMapper {
-    Device toDeviceFromSaveDeviceDTO(SaveDeviceRequestDTO saveDeviceRequestDTO);
+    Device toDeviceFromSaveDeviceRequestDTO(SaveDeviceRequestDTO saveDeviceRequestDTO);
     DeviceResponseDTO toDeviceResponseDTO(Device device);
 }

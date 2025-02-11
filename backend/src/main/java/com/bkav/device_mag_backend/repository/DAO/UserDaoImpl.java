@@ -4,6 +4,7 @@ import com.bkav.device_mag_backend.Mapper.UserMapper;
 import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.exception.EntityNotFoundException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
+import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.model.entity.User;
@@ -11,13 +12,13 @@ import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
 import com.bkav.device_mag_backend.repository.JpaRepository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -32,7 +33,7 @@ public class UserDaoImpl implements IUserDAO {
         if(user.isEmpty()) {
             throw  new EntityNotFoundException("User not found");
         }
-        return userMapper.toUserAuthenticationDTO(user.get());
+        return new UserAuthenticationDTO(user.get());
     }
 
     @Override
@@ -74,10 +75,16 @@ public class UserDaoImpl implements IUserDAO {
     }
 
     @Override
-    public List<UserResponseDTO> findAll() {
-        List<User> users = userRepository.findAll();
+    public PageResponse<UserResponseDTO> findAll(Pageable pageable) {
+        Page<User> pageData = userRepository.findAll(pageable);
         List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
-        users.stream().map(UserResponseDTO::new).forEach(userResponseDTOS::add);
-        return userResponseDTOS;
+        pageData.getContent().stream().map(UserResponseDTO::new).forEach(userResponseDTOS::add);
+        return PageResponse.<UserResponseDTO>builder()
+                .currentPage(pageable.getPageNumber())
+                .totalElements(pageData.getNumberOfElements())
+                .totalPages(pageData.getTotalPages())
+                .pageSize(pageData.getSize())
+                .data(userResponseDTOS)
+                .build();
     }
 }

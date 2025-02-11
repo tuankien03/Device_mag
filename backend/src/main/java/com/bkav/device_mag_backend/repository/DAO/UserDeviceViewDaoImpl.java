@@ -31,7 +31,6 @@ public class UserDeviceViewDaoImpl implements IUserDeviceViewDAO {
     }
 
 
-    @Override
     public Page<UserResponseDTO> getAllUsers(Pageable pageable, Size size) {
         return null;
     }

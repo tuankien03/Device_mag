@@ -3,16 +3,17 @@ package com.bkav.device_mag_backend.service;
 
 import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
+import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.UUID;
 
 
@@ -20,14 +21,11 @@ import java.util.UUID;
  * Service cho User
  */
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService {
 
     private final IUserDAO userDaoImpl;
-
-    @Autowired
-    UserService(IUserDAO userDaoImpl) {
-        this.userDaoImpl = userDaoImpl;
-    }
+    private final PasswordEncoder passwordEncoder ;
 
 
     @Override
@@ -55,8 +53,6 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponseDTO createUser(SaveUserRequestDTO saveUserRequestDTO) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(6);
-
         String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
         System.out.println(encodedPassword);
         saveUserRequestDTO.setPassword(encodedPassword);
@@ -70,7 +66,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserResponseDTO> findAllUsers() {
-        return userDaoImpl.findAll();
+    public PageResponse<UserResponseDTO> findAllUsers(Pageable pageable) {
+        return userDaoImpl.findAll(pageable);
     }
 }

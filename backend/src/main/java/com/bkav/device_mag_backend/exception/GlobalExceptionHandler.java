@@ -41,7 +41,8 @@ public class GlobalExceptionHandler  {
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiResponse<String>> handleMethodArgumentNotValidException(MethodArgumentTypeMismatchException e) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(CodeStatus.BAD_REQUEST,e.getCause().getMessage(),null));
-        }
+    }
+
 }
 
 
