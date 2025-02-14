@@ -9,7 +9,6 @@ import java.util.UUID;
 @Table(name = "user_device")
 @Data
 public class UserDeviceView {
-
     @EmbeddedId
     @AttributeOverrides({
             @AttributeOverride( name = "userId", column = @Column(name = "user_id")),

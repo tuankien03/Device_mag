@@ -11,21 +11,22 @@ import java.util.UUID;
 @Table(name = "assignment")
 @Data
 public class Assignment {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "uuid DEFAULT gen_random_uuid()", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "device_id")
+    @Column(name = "device_id", nullable = false)
     private UUID deviceId;
 
-    @Column(nullable = false)
+    @Column(name = "assigned_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime assignedAt;
 
-    @Column
+    @Column(name = "returned_at")
     private LocalDateTime returnedAt;
 }

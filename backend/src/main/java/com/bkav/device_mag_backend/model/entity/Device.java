@@ -3,10 +3,10 @@ package com.bkav.device_mag_backend.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "device_id",columnDefinition = "uuid DEFAULT gen_random_uuid()", updatable = false, nullable = false)
+    @Column(columnDefinition = "uuid DEFAULT gen_random_uuid()", updatable = false, nullable = false)
     private UUID deviceId;
 
     @Column(length = 100, nullable = false)

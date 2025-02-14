@@ -10,9 +10,7 @@ import com.bkav.device_mag_backend.repository.DAO.interfaces.IDeviceDAO;
 import com.bkav.device_mag_backend.repository.JpaRepository.DeviceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,11 +24,11 @@ public class DeviceDaoImpl implements IDeviceDAO {
     @Override
     public PageResponse<DeviceResponseDTO> getAllDevices(Pageable pageable) {
         Page<Device> pageData = deviceRepository.findAll(pageable);
-        System.out.println("test");
+        System.out.println(pageData.getContent());
         return PageResponse.<DeviceResponseDTO>builder()
                 .totalPages(pageData.getTotalPages())
                 .totalElements(pageData.getNumberOfElements())
-                .currentPage(pageable.getPageNumber())
+                .currentPage(pageable.getPageNumber() + 1)
                 .pageSize(pageData.getSize())
                 .data(pageData.getContent().stream().map(deviceMapper::toDeviceResponseDTO).collect(Collectors.toList()))
                 .build();

@@ -10,8 +10,6 @@ public class DeviceMagBackendApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(DeviceMagBackendApplication.class, args);
-
-
 	}
 
 }

@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final String[] PUBLIC_URLS = {
-            "/api/auth/**"
+            "/api/auth/**","/api/assignment/",
     };
 
     private final CustomJwtDecoder customJwtDecoder;

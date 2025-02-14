@@ -82,7 +82,7 @@ public class UserDaoImpl implements IUserDAO {
         return PageResponse.<UserResponseDTO>builder()
                 .currentPage(pageable.getPageNumber())
                 .totalElements(pageData.getNumberOfElements())
-                .totalPages(pageData.getTotalPages())
+                .totalPages(pageData.getTotalPages() + 1)
                 .pageSize(pageData.getSize())
                 .data(userResponseDTOS)
                 .build();

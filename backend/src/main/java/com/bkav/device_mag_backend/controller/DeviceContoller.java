@@ -32,7 +32,7 @@ public class DeviceContoller {
             @RequestParam(value="size", required = false, defaultValue = "12") int size
     ) {
         Sort sort = Sort.by("createdAt").descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAllDevices(pageable));
     }
 
