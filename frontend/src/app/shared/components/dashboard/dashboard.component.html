@@ -1,0 +1,39 @@
+<mat-toolbar color="primary" >
+    <button mat-icon-button (click)="sidenav.toggle()" id="menuIcon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span id="menuTitle">BKAV IOT</span>
+    <!-- <a mat-button routerLink="" class="top-menu-item"><mat-icon>home</mat-icon>Trang chủ</a>
+    <a mat-button routerLink="/user" class="top-menu-item"><mat-icon>people</mat-icon>Người dùng</a>
+    <a mat-button routerLink="/device" class="top-menu-item"><mat-icon>devices</mat-icon>Thiết bị</a> -->
+    <a mat-button id="account" routerLink="/account" class="top-menu-item"><mat-icon>account_circle</mat-icon>Tên</a>
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" opened="true" mode="side" class="side-nav">   
+        <div class="side-nav-items">
+            <div>
+                <a mat-button routerLink="home" class="side-menu-item"><mat-icon>home</mat-icon>Home</a>
+            </div>
+
+            <div>
+                <a mat-button routerLink="user" class="side-menu-item"><mat-icon>people</mat-icon>User</a>
+            </div>
+
+            <div>
+                <a mat-button routerLink="device" class="side-menu-item"><mat-icon>devices</mat-icon>Devices</a>
+            </div>
+
+        </div>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+
+
+</mat-sidenav-container>

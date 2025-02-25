@@ -1,0 +1,24 @@
+<div class="login-page">
+    <mat-card>
+        <mat-card-title class="text-aligh--center">Đăng nhập</mat-card-title>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field floatLabel="auto">
+                <input matInput placeholder="Username" formControlName="username" type="text" required>
+                <mat-error *ngIf="loginForm.get('username').hasError('required')">
+                    Username is required
+                </mat-error>
+                <mat-error >
+                    Please enter a valid username
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field floatLabel="auto">
+                <input matInput placeholder="Password" formControlName="password" type="password" required>
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                    Password is required
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+        </form>
+    </mat-card>
+
+</div>

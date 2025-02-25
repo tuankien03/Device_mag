@@ -1,0 +1,8 @@
+<div class="message-box" *ngIf="messageService.messages.length">
+    <!-- <div class="clear-btn">
+        <div (click)="messageService.clear()">X</div>
+    </div> -->
+    <app-message-item *ngFor="let message of messageService.messages" [message]="message.message" [status]="message.status">
+    </app-message-item>
+
+</div>

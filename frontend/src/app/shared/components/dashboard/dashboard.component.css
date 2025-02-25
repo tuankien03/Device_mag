@@ -1,0 +1,37 @@
+#menuTitle {
+    font-size: medium;
+    margin-right: 20px;
+}
+
+.mat-toolbar {
+    height: 60px;
+}
+
+.mat-toolbar #account {
+    margin-left: auto;
+}
+
+.mat-sidenav {
+    background-color: #3F51B5;
+    width: 244px;
+}
+
+.side-nav-items {
+    display: flexbox;
+    flex-direction: column;
+}
+
+.side-menu-item {
+    color: white !important;
+    margin-top: 20px;
+}
+
+
+.main-content {
+ 
+}
+
+.app-user {
+    width: 100%;
+}
+

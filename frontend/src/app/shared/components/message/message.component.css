@@ -1,0 +1,43 @@
+.message-box {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    z-index: 9999;
+    width: 400px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: transparent;
+    gap: 10px;
+}
+
+
+
+
+
+.clear-btn {
+    background-color: #ff4d4d; /* Màu đỏ */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .clear-btn:hover {
+    background-color: #cc0000; /* Màu đỏ đậm khi hover */
+  }
+  
+  .clear-btn:active {
+    background-color: #a30000; /* Màu đậm hơn khi nhấn */
+  }
+  
+  .clear-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
