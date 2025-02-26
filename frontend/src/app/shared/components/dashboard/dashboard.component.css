@@ -28,10 +28,8 @@
 
 
 .main-content {
- 
-}
-
-.app-user {
-    width: 100%;
+    box-sizing: border-box;
+    height: calc(100vh - 60px);
+    padding: 20px;
 }
 

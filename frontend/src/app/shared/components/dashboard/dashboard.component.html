@@ -1,5 +1,6 @@
 <mat-toolbar color="primary" >
-    <button mat-icon-button (click)="sidenav.toggle()" id="menuIcon" aria-label="Example icon-button with menu icon">
+
+    <button mat-icon-button (click)="sidenav.toggle()" id="menuIcon" aria-label=" icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
     <span id="menuTitle">BKAV IOT</span>
@@ -10,19 +11,19 @@
 
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container autosize>
     <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" opened="true" mode="side" class="side-nav">   
         <div class="side-nav-items">
             <div>
-                <a mat-button routerLink="home" class="side-menu-item"><mat-icon>home</mat-icon>Home</a>
+                <a mat-button routerLink="home" class="side-menu-item"><mat-icon>home</mat-icon> Home</a>
             </div>
 
             <div>
-                <a mat-button routerLink="user" class="side-menu-item"><mat-icon>people</mat-icon>User</a>
+                <a mat-button routerLink="user" class="side-menu-item"><mat-icon>people</mat-icon> User</a>
             </div>
 
             <div>
-                <a mat-button routerLink="device" class="side-menu-item"><mat-icon>devices</mat-icon>Devices</a>
+                <a mat-button routerLink="device" class="side-menu-item"><mat-icon>devices</mat-icon> Devices</a>
             </div>
 
         </div>
@@ -33,7 +34,7 @@
         <div class="main-content">
             <router-outlet></router-outlet>
         </div>
-    </mat-sidenav-content>
+    </mat-sidenav-content> 
 
 
 </mat-sidenav-container>

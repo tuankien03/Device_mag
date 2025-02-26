@@ -13,10 +13,13 @@ const routes: Routes = [
       {path: 'home', component: HomepageComponent},
       {path: 'user', component: UserComponent},
       {path: 'device', component: DevicesComponent},
+     
     ]
    },
   { path: 'login', component: LoginComponent },
-  // { path: '',   redirectTo: 'home', pathMatch: 'full' }, // redirect to `first-component`
+  { path: '',   redirectTo: 'dashboard', pathMatch: 'full' }, // redirect to `first-component`
+  { path: '**', component: HomepageComponent },
+  { path: '**', component: UserComponent },
 ];
 
 @NgModule({
