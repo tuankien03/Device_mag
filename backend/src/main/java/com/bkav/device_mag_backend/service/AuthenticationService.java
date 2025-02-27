@@ -95,4 +95,8 @@ public class AuthenticationService implements IAuthenticationService {
         }
     }
 
+    public String generateRefreshToken(UserAuthenticationDTO user) {
+        return generateToken(user);
+    }
+
 }

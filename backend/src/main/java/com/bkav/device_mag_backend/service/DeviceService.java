@@ -1,6 +1,7 @@
 package com.bkav.device_mag_backend.service;
 
 import com.bkav.device_mag_backend.Mapper.DeviceMapper;
+import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveDeviceRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.DeviceResponseDTO;
@@ -20,7 +21,6 @@ public class DeviceService implements IDeviceService {
     private final IDeviceDAO deviceDao;
     @Override
     public DeviceResponseDTO findDeviceById(UUID id) {
-
         return  deviceDao.getDeviceById(id);
     }
 
@@ -36,7 +36,21 @@ public class DeviceService implements IDeviceService {
     }
 
     @Override
+    public boolean checkDeviceAvailability(UUID id) {
+        DeviceResponseDTO device  = deviceDao.getDeviceById(id);
+        if (device.getStatus().getValue().equals("ASSIGNED")) {
+            return false;
+        }
+        if(device.getStatus().getValue().equals("RETURNING")) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void deleteDeviceById(UUID id) {
         deviceDao.deleteDeviceById(id);
     }
+
+
 }

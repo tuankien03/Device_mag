@@ -40,6 +40,13 @@ public class AssignmentController {
         return new ApiResponse<>(CodeStatus.CREATED, CodeStatus.CREATED_TEXT,  assignmentService.addAssignment(saveAssignmentRequestDTO));
     }
 
+    @PutMapping("{id}/return")
+    public ApiResponse<String> returnDevice(@PathVariable UUID id) {
+        System.out.println("returnDevice");
+        assignmentService.returnDevice(id);
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,  "Thiết bị đã được trả!!");
+    }
+
     @DeleteMapping("{id}")
     public ApiResponse<String> deleteAssignment(@PathVariable UUID id) {
         assignmentService.deleteAssignmentById(id);

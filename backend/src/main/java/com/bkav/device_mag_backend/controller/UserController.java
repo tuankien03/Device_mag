@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ApiResponse<UserResponseDTO> saveUser(@RequestBody @Valid SaveUserRequestDTO request) {
+    public ApiResponse<UserResponseDTO> saveUser(@RequestBody SaveUserRequestDTO request) {
         return new ApiResponse<>(CodeStatus.CREATED, CodeStatus.CREATED_TEXT,  userService.createUser(request));
     }
 

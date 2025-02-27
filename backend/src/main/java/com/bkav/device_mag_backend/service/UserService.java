@@ -8,12 +8,15 @@ import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.UUID;
 
 
@@ -22,6 +25,7 @@ import java.util.UUID;
  */
 @Service
 @RequiredArgsConstructor
+@Validated
 public class UserService implements IUserService {
 
     private final IUserDAO userDaoImpl;
@@ -52,7 +56,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponseDTO createUser(SaveUserRequestDTO saveUserRequestDTO) {
+    public UserResponseDTO createUser(@Valid SaveUserRequestDTO saveUserRequestDTO) {
         String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
         System.out.println(encodedPassword);
         saveUserRequestDTO.setPassword(encodedPassword);

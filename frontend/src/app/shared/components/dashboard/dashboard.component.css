@@ -10,9 +10,13 @@
 .mat-toolbar #account {
     margin-left: auto;
 }
+.mat-toolbar {
+    background-color: var(--primary);
+    color: white;
+}
 
 .mat-sidenav {
-    background-color: #3F51B5;
+    background-color: var(--primary);
     width: 244px;
 }
 

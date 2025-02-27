@@ -13,4 +13,14 @@ public class SaveAssignmentRequestDTO {
     private UUID userId;
     private UUID deviceId;
     private LocalDateTime returnedAt;
+
+    public SaveAssignmentRequestDTO(UUID id, UUID userId, UUID deviceId, LocalDateTime returnedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.deviceId = deviceId;
+        this.returnedAt = returnedAt;
+    }
+
+    public SaveAssignmentRequestDTO() {}
+
 }

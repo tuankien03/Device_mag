@@ -12,7 +12,7 @@ s
     this.messages.push(message);
     setTimeout(() => {
       this.removeMessage(0);
-    }, 3000);
+    }, 1000);
     if (this.messages.length > 8) {
       this.removeMessage(0);
     }
