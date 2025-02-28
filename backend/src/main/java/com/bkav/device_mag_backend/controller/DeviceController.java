@@ -18,12 +18,28 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/device")
 @RequiredArgsConstructor
-public class DeviceContoller {
+public class DeviceController {
     private final DeviceService deviceService;
 
     @GetMapping("{id}")
     public ApiResponse<DeviceResponseDTO>getDeviceById(@PathVariable UUID id) {
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findDeviceById(id));
+    }
+
+    @GetMapping("search/{name}")
+    public ApiResponse<PageResponse<DeviceResponseDTO>> getDeviceByName(
+            @PathVariable String name,
+            @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
+            @RequestParam(value="size", required = false, defaultValue = "12") int size,
+            @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction) {
+        Sort sort = Sort.by(property).descending();
+        if (direction.equals("ASC")) {
+            sort = Sort.by(property).ascending();
+        }
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findDevicesByName(name, pageable));
+
     }
 
     @GetMapping

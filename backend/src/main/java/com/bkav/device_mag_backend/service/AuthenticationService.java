@@ -16,9 +16,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +24,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Service
@@ -74,11 +73,11 @@ public class AuthenticationService implements IAuthenticationService {
 
     public String generateToken(UserAuthenticationDTO user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
-        System.out.println(user.getRole().getValue());
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
-                .claim("roles", user.getRole().getValue())
-                .issuer(user.getUsername())
+                .jwtID(UUID.randomUUID().toString())
+                .claim("scope", user.getRole().getValue())
+                .issuer(user.getUserID().toString())
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()))
                 .build();

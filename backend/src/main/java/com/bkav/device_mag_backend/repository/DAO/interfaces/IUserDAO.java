@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface IUserDAO {
     UserAuthenticationDTO findUserByUsername(String username);
-    UserResponseDTO findByUsername(String username);
+    PageResponse<UserResponseDTO>  findUsersByUsername(String username,Pageable pageable);
     UserResponseDTO save(SaveUserRequestDTO saveUserRequestDTO);
     PageResponse<UserResponseDTO> findAll(Pageable pageable);
     UserResponseDTO findById(UUID id);

@@ -35,6 +35,18 @@ public class DeviceDaoImpl implements IDeviceDAO {
     }
 
     @Override
+    public PageResponse<DeviceResponseDTO> getDevicesByName(String name, Pageable pageable) {
+        Page<Device> pageData = deviceRepository.findDevicesByNameContaining(name, pageable);
+        System.out.println(pageData.getContent());
+        return PageResponse.<DeviceResponseDTO>builder()
+                .totalPages(pageData.getTotalPages())
+                .totalElements(pageData.getNumberOfElements())
+                .currentPage(pageable.getPageNumber() + 1)
+                .pageSize(pageData.getSize())
+                .data(pageData.getContent().stream().map(deviceMapper::toDeviceResponseDTO).collect(Collectors.toList()))
+                .build();    }
+
+    @Override
     public DeviceResponseDTO getDeviceById(UUID id) {
         Device device = deviceRepository.findById(id).orElse(null);
         if (device == null) {

@@ -13,9 +13,7 @@ import com.bkav.device_mag_backend.repository.JpaRepository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -29,20 +27,29 @@ public class UserDaoImpl implements IUserDAO {
 
     @Override
     public UserAuthenticationDTO findUserByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        if(user.isEmpty()) {
-            throw  new EntityNotFoundException("User not found");
-        }
-        return new UserAuthenticationDTO(user.get());
+        User user =  userRepository.findByUsername(username).isPresent() ? userRepository.findByUsername(username).get() : null;
+       if (user == null) {
+           throw new EntityNotFoundException("User not found");
+       }
+        return new UserAuthenticationDTO(user);
     }
 
     @Override
-    public UserResponseDTO findByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        if(user.isEmpty()) {
-            throw  new EntityNotFoundException("User not found");
-        }
-        return new UserResponseDTO(user.get());
+    public PageResponse<UserResponseDTO> findUsersByUsername(String username, Pageable pageable) {
+        Page<User> pageData = userRepository.findUsersByUsernameContaining(username,pageable);
+        return getUserResponseDTOPageResponse(pageable, pageData);
+    }
+
+    private PageResponse<UserResponseDTO> getUserResponseDTOPageResponse(Pageable pageable, Page<User> pageData) {
+        List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
+        pageData.getContent().stream().map(UserResponseDTO::new).forEach(userResponseDTOS::add);
+        return PageResponse.<UserResponseDTO>builder()
+                .currentPage(pageable.getPageNumber())
+                .totalElements(pageData.getNumberOfElements())
+                .totalPages(pageData.getTotalPages() + 1)
+                .pageSize(pageData.getSize())
+                .data(userResponseDTOS)
+                .build();
     }
 
     public UserResponseDTO save(SaveUserRequestDTO saveUserRequestDTO) {
@@ -77,14 +84,6 @@ public class UserDaoImpl implements IUserDAO {
     @Override
     public PageResponse<UserResponseDTO> findAll(Pageable pageable) {
         Page<User> pageData = userRepository.findAll(pageable);
-        List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
-        pageData.getContent().stream().map(UserResponseDTO::new).forEach(userResponseDTOS::add);
-        return PageResponse.<UserResponseDTO>builder()
-                .currentPage(pageable.getPageNumber())
-                .totalElements(pageData.getNumberOfElements())
-                .totalPages(pageData.getTotalPages() + 1)
-                .pageSize(pageData.getSize())
-                .data(userResponseDTOS)
-                .build();
+        return getUserResponseDTOPageResponse(pageable, pageData);
     }
 }

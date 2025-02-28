@@ -4,6 +4,7 @@ import Constant.CodeStatus;
 import com.bkav.device_mag_backend.model.DTO.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -44,6 +45,13 @@ public class GlobalExceptionHandler  {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(", "));
         return ResponseEntity.badRequest().body(new ApiResponse<>(CodeStatus.BAD_REQUEST, errorMessage, null));
+    }
+
+
+
+    @ExceptionHandler(value = PropertyReferenceException.class)
+    public ResponseEntity<ApiResponse<String>> handlePropertyReferenceException(PropertyReferenceException e) {
+        return ResponseEntity.badRequest().body(new ApiResponse<>(CodeStatus.BAD_REQUEST, e.getMessage(), null));
     }
 
 

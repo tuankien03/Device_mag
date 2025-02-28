@@ -1,12 +1,8 @@
 package com.bkav.device_mag_backend.service;
 
-import com.bkav.device_mag_backend.Mapper.DeviceMapper;
-import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveDeviceRequestDTO;
-import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.DeviceResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
-import com.bkav.device_mag_backend.repository.DAO.DeviceDaoImpl;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IDeviceDAO;
 import com.bkav.device_mag_backend.service.interfaces.IDeviceService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +29,11 @@ public class DeviceService implements IDeviceService {
     @Override
     public PageResponse<DeviceResponseDTO> findAllDevices(Pageable pageable) {
         return deviceDao.getAllDevices(pageable);
+    }
+
+    @Override
+    public PageResponse<DeviceResponseDTO> findDevicesByName(String name, Pageable pageable) {
+        return deviceDao.getDevicesByName(name, pageable);
     }
 
     @Override

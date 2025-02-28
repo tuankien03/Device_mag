@@ -13,6 +13,7 @@ public interface IDeviceService {
     DeviceResponseDTO findDeviceById(UUID id);
     DeviceResponseDTO saveDevice(SaveDeviceRequestDTO saveDeviceRequestDTO);
     PageResponse<DeviceResponseDTO> findAllDevices(Pageable pageable);
+    PageResponse<DeviceResponseDTO> findDevicesByName(String name,Pageable pageable);
     boolean checkDeviceAvailability(UUID id);
     void deleteDeviceById(UUID id);
 }

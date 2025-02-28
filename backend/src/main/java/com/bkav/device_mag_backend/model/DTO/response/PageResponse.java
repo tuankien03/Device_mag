@@ -15,6 +15,5 @@ public class PageResponse<T> {
     int currentPage;
     int pageSize;
     int totalElements;
-
     List<T> data;
 }

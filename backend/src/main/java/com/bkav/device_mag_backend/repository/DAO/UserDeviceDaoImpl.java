@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +25,16 @@ public class UserDeviceDaoImpl implements IUserDeviceDAO {
     @Override
     public PageResponse<UserDeviceResponseDTO> getAll(Pageable pageable) {
         Page<UserDevice> userDevices = userDeviceRepository.findAll(pageable);
+        return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
+    }
+
+    @Override
+    public PageResponse<UserDeviceResponseDTO> getUserDeviceByUserId(UUID userId, Pageable pageable) {
+        Page<UserDevice> userDevices = userDeviceRepository.findAllByUserId(userId,pageable);
+        return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
+    }
+
+    private PageResponse<UserDeviceResponseDTO> getUserDeviceResponseDTOPageResponse(Pageable pageable, Page<UserDevice> userDevices) {
         System.out.println(userDevices.getTotalElements());
         List<UserDeviceResponseDTO> userDeviceResponseDTOS = new ArrayList<>();
         userDevices.getContent().forEach(userDevice -> {

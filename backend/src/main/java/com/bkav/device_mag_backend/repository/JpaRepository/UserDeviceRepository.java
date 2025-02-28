@@ -1,9 +1,14 @@
 package com.bkav.device_mag_backend.repository.JpaRepository;
 
 import com.bkav.device_mag_backend.model.entity.UserDevice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public interface UserDeviceRepository extends JpaRepository<UserDevice, Long> {
+    Page<UserDevice> findAllByUserId(UUID userId, Pageable pageable);
 }

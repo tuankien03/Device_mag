@@ -1,6 +1,7 @@
 package com.bkav.device_mag_backend.service.interfaces;
 
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
+import com.bkav.device_mag_backend.model.DTO.response.DevicesOfUserResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public interface IUserService  {
     UserResponseDTO findUserById(UUID id);
     UserAuthenticationDTO findUserByUsername(String username);
-    UserResponseDTO findByUsername(String username);
+    PageResponse<UserResponseDTO> findUsersByUsername(String username,Pageable pageable);
     UserResponseDTO updateUser(UUID id, SaveUserRequestDTO saveUserRequestDTO);
     UserResponseDTO createUser(@Valid SaveUserRequestDTO saveUserRequestDTO);
     void deleteUserById(UUID id);

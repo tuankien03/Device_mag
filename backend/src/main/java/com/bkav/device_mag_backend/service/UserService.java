@@ -3,10 +3,13 @@ package com.bkav.device_mag_backend.service;
 
 import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
+import com.bkav.device_mag_backend.model.DTO.response.DevicesOfUserResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
+import com.bkav.device_mag_backend.service.interfaces.IAuthenticationService;
+import com.bkav.device_mag_backend.service.interfaces.IDeviceService;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +42,17 @@ public class UserService implements IUserService {
 
     @Override
     public UserAuthenticationDTO findUserByUsername(String username) {
+        if (userDaoImpl.findUserByUsername(username) == null) {
+            throw new BadRequestException("Username không tồn tại");
+        }
         return userDaoImpl.findUserByUsername(username);
     }
 
     @Override
-    public UserResponseDTO findByUsername(String username) {
-        return userDaoImpl.findByUsername(username);
+    public PageResponse<UserResponseDTO> findUsersByUsername(String username, Pageable pageable) {
+        return userDaoImpl.findUsersByUsername(username, pageable);
     }
+
 
     @Override
     public UserResponseDTO updateUser(UUID id, SaveUserRequestDTO saveUserRequestDTO) {
