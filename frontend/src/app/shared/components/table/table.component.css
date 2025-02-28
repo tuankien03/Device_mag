@@ -35,6 +35,13 @@ table {
     overflow-y: scroll;
 }
 
+th.mat-sort-header-sorted {
+    color: black;
+  }
+
+.mat-toolbar {
+    background-color: var(--white);
+}
 
 
 

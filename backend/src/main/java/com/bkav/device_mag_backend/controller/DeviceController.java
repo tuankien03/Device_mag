@@ -29,9 +29,14 @@ public class DeviceContoller {
     @GetMapping
     public ApiResponse<PageResponse<DeviceResponseDTO>> getAllDevices(
             @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
-            @RequestParam(value="size", required = false, defaultValue = "12") int size
+            @RequestParam(value="size", required = false, defaultValue = "12") int size,
+            @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
     ) {
-        Sort sort = Sort.by("createdAt").descending();
+        Sort sort = Sort.by(property).descending();
+        if (direction.equals("ASC")) {
+            sort = Sort.by(property).ascending();
+        }
         Pageable pageable = PageRequest.of(page - 1, size, sort);
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAllDevices(pageable));
     }

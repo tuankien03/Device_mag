@@ -19,13 +19,15 @@ import { TableComponent } from './components/table/table.component';
 import { RouterModule } from '@angular/router'; // 
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 
 
 
 
 @NgModule({
-  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent],
+  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, ToolbarComponent],
   imports: [
     CommonModule,MatInputModule,
     MatCardModule,
@@ -37,7 +39,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatToolbarModule,
     RouterModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [MessageComponent, MessageItemComponent,SidebarComponent,HomepageComponent,UserComponent,DevicesComponent]
 })

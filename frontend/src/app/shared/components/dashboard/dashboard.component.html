@@ -3,11 +3,11 @@
     <button mat-icon-button (click)="sidenav.toggle()" id="menuIcon" aria-label=" icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
-    <span id="menuTitle">BKAV IOT</span>
+    <span id="menuTitle"> <img src="assets/Logo_Bkav.png" alt="BKAV logo" > </span>
     <!-- <a mat-button routerLink="" class="top-menu-item"><mat-icon>home</mat-icon>Trang chủ</a>
     <a mat-button routerLink="/user" class="top-menu-item"><mat-icon>people</mat-icon>Người dùng</a>
     <a mat-button routerLink="/device" class="top-menu-item"><mat-icon>devices</mat-icon>Thiết bị</a> -->
-    <a mat-button id="account" routerLink="/account" class="top-menu-item"><mat-icon>account_circle</mat-icon>Tên</a>
+    <a mat-button id="account" (click)="authService.logout()" class="top-menu-item"><mat-icon>account_circle</mat-icon>{{authService.getUsername()}} + {{authService.getRole()}}</a>
 
 </mat-toolbar>
 

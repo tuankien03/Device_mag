@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/shared/service/message.service';
-import { LoginService } from '../login.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private messageService: MessageService,private loginService: LoginService) {
+  constructor(private fb: FormBuilder,private messageService: MessageService,private authService: AuthService,private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', Validators.required]
@@ -26,9 +27,15 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if(this.loginForm.valid){
       console.log(this.loginForm.value);
-      this.loginService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
+      this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
         (data) => {
-          console.log(data);
+          if(data.status){
+            this.messageService.addMessage({message: "Login success", status: true});
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        (error) => {
+          this.messageService.addMessage({message: error.message, status: false});
         }
       )
     } else {

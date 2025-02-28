@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { UserComponent } from './shared/components/user/user.component';
 import { DevicesComponent } from './shared/components/devices/devices.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: 'dashboard',
@@ -14,7 +15,8 @@ const routes: Routes = [
       {path: 'user', component: UserComponent},
       {path: 'device', component: DevicesComponent},
      
-    ]
+    ],
+    canActivate: [AuthGuard]
    },
   { path: 'login', component: LoginComponent },
   { path: '',   redirectTo: 'dashboard', pathMatch: 'full' }, // redirect to `first-component`
