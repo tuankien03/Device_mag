@@ -1,2 +1,2 @@
-
-<app-table [displayedColumns]="displayedColumns" [dataSource]="dataSource"></app-table>
+<app-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [cellActions]="config"
+    (onAction)="onAction($event)" (search)="onSearch($event)" (add)="onAdd()" (refresh)="onRefresh()"> ></app-table>
