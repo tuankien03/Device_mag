@@ -8,7 +8,6 @@ export class MessageService {
   messages: Message[] = []; // ✅ Khai báo mảng message
 s
   addMessage( message: Message): void {
-    console.log(message);
     this.messages.push(message);
     setTimeout(() => {
       this.removeMessage(0);

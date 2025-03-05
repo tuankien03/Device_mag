@@ -7,7 +7,8 @@ import {AuthModule} from './auth/auth.module';
 import { ShareModule } from './shared/share.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { RouterModule } from '@angular/router'; // 
+import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RouterModule } from '@angular/router'; //
     HttpClientModule,
     AppRoutingModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

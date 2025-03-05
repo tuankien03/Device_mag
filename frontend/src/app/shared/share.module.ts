@@ -20,14 +20,16 @@ import { RouterModule } from '@angular/router'; //
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
 
 
 @NgModule({
-  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, ToolbarComponent],
+  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent],
   imports: [
     CommonModule,MatInputModule,
     MatCardModule,
@@ -40,8 +42,13 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     RouterModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,      // ✅ Import MatDialogModule
+    MatFormFieldModule,   // ✅ Import MatFormFieldModule
+    MatInputModule,       // ✅ Import MatInputModule
+    MatButtonModule,      // ✅ Import MatButtonModule
+    ReactiveFormsModule   // ✅ Import ReactiveFormsModule
   ],
-  exports: [MessageComponent, MessageItemComponent,SidebarComponent,HomepageComponent,UserComponent,DevicesComponent]
+  exports: [MessageComponent, MessageItemComponent,SidebarComponent,HomepageComponent,UserComponent,DevicesComponent,UserFormComponent]
 })
 export class ShareModule { }

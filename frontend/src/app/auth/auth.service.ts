@@ -39,7 +39,6 @@ export class AuthService {
     const token = localStorage.getItem('authToken');
     this.http.post<any>(this.apiUrl + 'introspect', { token }).subscribe(
       (data) => {
-        console.log(data);
       }
     );
     return token !== null;
