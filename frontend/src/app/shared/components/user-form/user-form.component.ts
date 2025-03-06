@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { UserService } from '../../service/user.service';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-user-form',
@@ -14,7 +16,9 @@ export class UserFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<UserFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any 
+    private userService: UserService,
+    private messageService: MessageService,
+    @Inject(MAT_DIALOG_DATA) public data: any, 
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +33,27 @@ export class UserFormComponent implements OnInit {
 
   onSubmit() {
     if (this.userForm.valid) {
-      this.dialogRef.close(this.userForm.getRawValue()); 
+      const  result = this.userForm.getRawValue();
+      console.log('User mới:', this.data?.id);
+      if (this.data) {
+        this.userService.updateUser(this.data.id, result).subscribe(
+          (data) => {
+            this.messageService.addMessage({message: "Sửa user thành công", status: true});
+            this.dialogRef.close(); 
+          }, (error) => {
+            this.messageService.addMessage({ message: error.message, status: false });
+          }
+        );
+      } else {
+        this.userService.createUser(result).subscribe(
+          (data) => {
+            this.messageService.addMessage({message: "Tạo user thành công", status: true});
+            this.dialogRef.close(); 
+          }, (error) => {
+            this.messageService.addMessage({ message: error.message, status: false });
+          }
+        );
+      }
     }
   }
 

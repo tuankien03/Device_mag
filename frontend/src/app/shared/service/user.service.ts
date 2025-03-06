@@ -61,7 +61,7 @@ export class UserService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/" + id, {username, password, role }).pipe(
+    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/" + id, {username, password, role }, {headers}).pipe(
       tap(
         response => {
           console.log(response);
@@ -71,6 +71,24 @@ export class UserService {
       })
     )
 
+  }
+
+  createUser(userData: {username: string, password: string, role: string }) {
+    const {username, password, role} = userData;
+    const token = localStorage.getItem(this.tokenKey) || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<ResponseApi<User>>(this.apiUrl + "user", {username, password, role }, {headers}).pipe(
+      tap(
+        response => {
+          console.log(response);
+        }
+      ), catchError(error => {
+        throw error.error;
+      })
+    )
   }
 
   deleteUser(id: string): Observable<ResponseApi<string>> {

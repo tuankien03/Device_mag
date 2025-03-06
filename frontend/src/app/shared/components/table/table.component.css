@@ -4,6 +4,11 @@
     display: flex;
     flex-direction: column;
 }
+td.mat-cell {
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+  
 
 .mat-elevation-z8.table {
     position: relative;

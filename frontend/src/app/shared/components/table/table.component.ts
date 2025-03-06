@@ -51,8 +51,10 @@ export class TableComponent implements AfterViewInit, OnChanges {
     this.refresh.emit();
   }
 
-  onActionClick(id: string, nameAction: string) {
-    this.onAction.emit({id, nameAction});
+  onActionClick(element: any, nameAction: string) {
+    const idValue = element?.id || element?.deviceId || element?.userId || null;
+
+    this.onAction.emit({id: idValue, nameAction});
   }
 
   get displayedColumnsWithoutLast(): string[] {

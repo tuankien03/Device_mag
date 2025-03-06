@@ -50,22 +50,14 @@ export class UserComponent {
     this.userService.getUserById(id).subscribe(
       (data) => {
         console.log(data)
-        const user = data.body;
+        const user = { ...data.body, id: id };
         const dialogRef = this.dialog.open(UserFormComponent, {
           width: '400px',
           data: user 
         });
-    
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            console.log('User mới:', result);
-            this.userService.updateUser(id, result).subscribe(
-              (data) => {
-                this.messageService.addMessage({message: "Sửa user thành công", status: true});
-              }, (error) => {
-                this.messageService.addMessage({ message: error.message, status: false });
-              }
-            );
+           console.log(result)
           }
         });
       }

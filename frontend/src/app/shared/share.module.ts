@@ -23,13 +23,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DeviceFormComponent } from './components/device-form/device-form.component';
 
 
 
 
 
 @NgModule({
-  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent],
+  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent],
   imports: [
     CommonModule,MatInputModule,
     MatCardModule,
@@ -47,7 +49,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,   // ✅ Import MatFormFieldModule
     MatInputModule,       // ✅ Import MatInputModule
     MatButtonModule,      // ✅ Import MatButtonModule
-    ReactiveFormsModule   // ✅ Import ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule  // ✅ Import ReactiveFormsModule
   ],
   exports: [MessageComponent, MessageItemComponent,SidebarComponent,HomepageComponent,UserComponent,DevicesComponent,UserFormComponent]
 })
