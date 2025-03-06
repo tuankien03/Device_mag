@@ -1,7 +1,6 @@
 package com.bkav.device_mag_backend.repository.DAO;
 
 import com.bkav.device_mag_backend.Mapper.UserMapper;
-import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.exception.EntityNotFoundException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -24,6 +24,10 @@ public class UserDaoImpl implements IUserDAO {
     private final UserRepository  userRepository;
     private final UserMapper userMapper;
 
+    @Override
+    public boolean checkIfUserExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
 
     @Override
     public UserAuthenticationDTO findUserByUsername(String username) {
@@ -37,25 +41,32 @@ public class UserDaoImpl implements IUserDAO {
     @Override
     public PageResponse<UserResponseDTO> findUsersByUsername(String username, Pageable pageable) {
         Page<User> pageData = userRepository.findUsersByUsernameContaining(username,pageable);
+        System.out.println(pageData);
         return getUserResponseDTOPageResponse(pageable, pageData);
     }
 
     private PageResponse<UserResponseDTO> getUserResponseDTOPageResponse(Pageable pageable, Page<User> pageData) {
         List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
         pageData.getContent().stream().map(UserResponseDTO::new).forEach(userResponseDTOS::add);
+        System.out.println(userResponseDTOS);
         return PageResponse.<UserResponseDTO>builder()
-                .currentPage(pageable.getPageNumber())
-                .totalElements(pageData.getNumberOfElements())
-                .totalPages(pageData.getTotalPages() + 1)
+                .currentPage(pageable.getPageNumber() + 1)
+                .totalElements((int) pageData.getTotalElements())
+                .totalPages(pageData.getTotalPages() )
                 .pageSize(pageData.getSize())
                 .data(userResponseDTOS)
                 .build();
     }
 
     public UserResponseDTO save(SaveUserRequestDTO saveUserRequestDTO) {
-        User user = userMapper.toUserFromSaveUserResquestDTO(saveUserRequestDTO);
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new BadRequestException("Username already exists");
+        User user = null;
+        if (checkIfUserExists(saveUserRequestDTO.getUsername())) {
+            user = userRepository.findByUsername(saveUserRequestDTO.getUsername()).get();
+            user.setPassword(saveUserRequestDTO.getPassword());
+            user.setRole(saveUserRequestDTO.getRole());
+            user.setUpdatedAt(LocalDateTime.now());
+        } else {
+            user = userMapper.toUserFromSaveUserResquestDTO(saveUserRequestDTO);
         }
         return new UserResponseDTO(userRepository.save(user));
     }
@@ -82,8 +93,9 @@ public class UserDaoImpl implements IUserDAO {
     }
 
     @Override
-    public PageResponse<UserResponseDTO> findAll(Pageable pageable) {
-        Page<User> pageData = userRepository.findAll(pageable);
+    public PageResponse<UserResponseDTO> findAll(String username, Pageable pageable) {
+        Page<User> pageData = userRepository.findUsersByUsernameContaining(username, pageable);
+        System.out.println(pageData);
         return getUserResponseDTOPageResponse(pageable, pageData);
     }
 }

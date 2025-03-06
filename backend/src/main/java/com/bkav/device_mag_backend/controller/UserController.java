@@ -38,14 +38,15 @@ public class UserController {
             @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
             @RequestParam(value="size", required = false, defaultValue = "12") int size,
             @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
+            @RequestParam(value = "searchText", required = false, defaultValue = "") String username
     ) {
         Sort sort = Sort.by(property).descending();
         if (direction.equals("ASC")) {
             sort = Sort.by(property).ascending();
         }
         Pageable pageable = PageRequest.of(page - 1, size, sort);
-        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,userService.findAllUsers(pageable));
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,userService.findUsersByUsername(username, pageable));
     }
 
     @GetMapping("{id}")
@@ -91,8 +92,12 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ApiResponse<UserResponseDTO> updateUser(@PathVariable UUID id,SaveUserRequestDTO request) {
+    public ApiResponse<UserResponseDTO> updateUser(@PathVariable UUID id, @RequestBody SaveUserRequestDTO request) {
         request.setUserId(id);
+        System.out.println("update user");
+        System.out.println( request);
+        System.out.println("update user");
+
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userService.updateUser(id,request));
 
     }

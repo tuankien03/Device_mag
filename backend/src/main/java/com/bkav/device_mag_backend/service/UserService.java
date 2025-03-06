@@ -3,19 +3,14 @@ package com.bkav.device_mag_backend.service;
 
 import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
-import com.bkav.device_mag_backend.model.DTO.response.DevicesOfUserResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
-import com.bkav.device_mag_backend.service.interfaces.IAuthenticationService;
-import com.bkav.device_mag_backend.service.interfaces.IDeviceService;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -55,15 +50,24 @@ public class UserService implements IUserService {
 
 
     @Override
-    public UserResponseDTO updateUser(UUID id, SaveUserRequestDTO saveUserRequestDTO) {
+    public UserResponseDTO updateUser(UUID id,@Valid SaveUserRequestDTO saveUserRequestDTO) {
         if(userDaoImpl.findById(id) == null) {
             throw new BadRequestException("Yêu cầu không hợp lệ!!");
         }
+        System.out.println(userDaoImpl.findById(id));
+        if (!saveUserRequestDTO.getUsername().equals(userDaoImpl.findById(id).getUsername())) {
+            throw  new BadRequestException("Không thể sửa username!!");
+        }
+        String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
+        saveUserRequestDTO.setPassword(encodedPassword);
         return userDaoImpl.save(saveUserRequestDTO);
     }
 
     @Override
     public UserResponseDTO createUser(@Valid SaveUserRequestDTO saveUserRequestDTO) {
+        if(userDaoImpl.checkIfUserExists(saveUserRequestDTO.getUsername())) {
+            throw new BadRequestException("User đã tồi tại!!");
+        }
         String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
         System.out.println(encodedPassword);
         saveUserRequestDTO.setPassword(encodedPassword);
@@ -77,7 +81,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public PageResponse<UserResponseDTO> findAllUsers(Pageable pageable) {
-        return userDaoImpl.findAll(pageable);
+    public PageResponse<UserResponseDTO> findAllUsers(String username, Pageable pageable) {
+        return userDaoImpl.findAll(username, pageable);
     }
 }

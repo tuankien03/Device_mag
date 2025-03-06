@@ -16,8 +16,8 @@ public interface IUserService  {
     UserResponseDTO findUserById(UUID id);
     UserAuthenticationDTO findUserByUsername(String username);
     PageResponse<UserResponseDTO> findUsersByUsername(String username,Pageable pageable);
-    UserResponseDTO updateUser(UUID id, SaveUserRequestDTO saveUserRequestDTO);
+    UserResponseDTO updateUser(UUID id,@Valid SaveUserRequestDTO saveUserRequestDTO);
     UserResponseDTO createUser(@Valid SaveUserRequestDTO saveUserRequestDTO);
     void deleteUserById(UUID id);
-    PageResponse<UserResponseDTO> findAllUsers(Pageable pageable);
+    PageResponse<UserResponseDTO> findAllUsers(String username, Pageable pageable);
 }

@@ -66,6 +66,7 @@ public class DeviceController {
     @PutMapping("{id}")
     public ApiResponse<DeviceResponseDTO> updateDevice(@RequestBody SaveDeviceRequestDTO request, @PathVariable UUID id) {
         request.setDeviceId(id);
+        System.out.println(request);
         return  new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.saveDevice(request));
 
     }

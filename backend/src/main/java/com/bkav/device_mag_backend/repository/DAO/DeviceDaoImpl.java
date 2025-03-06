@@ -27,7 +27,7 @@ public class DeviceDaoImpl implements IDeviceDAO {
         System.out.println(pageData.getContent());
         return PageResponse.<DeviceResponseDTO>builder()
                 .totalPages(pageData.getTotalPages())
-                .totalElements(pageData.getNumberOfElements())
+                .totalElements((int) pageData.getTotalElements())
                 .currentPage(pageable.getPageNumber() + 1)
                 .pageSize(pageData.getSize())
                 .data(pageData.getContent().stream().map(deviceMapper::toDeviceResponseDTO).collect(Collectors.toList()))
