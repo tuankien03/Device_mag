@@ -54,13 +54,30 @@ export class DeviceService {
     );
   }
 
+  createDevice(deviceData: { name: string, status: string, description: string }) {
+    const token = localStorage.getItem(this.tokenKey) || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<ResponseApi<Device>>(this.apiUrl + 'device', deviceData, { headers }).pipe(
+      tap(
+        response => {
+          console.log(response);
+        }
+      ), catchError(error => {
+        throw error.error;
+      })
+    )
+  }
+
   updateDevice(id: string, deviceData: { name: string, status: string, description: string }) {
     const token = localStorage.getItem(this.tokenKey) || '';
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.put<ResponseApi<Device>>(this.apiUrl + "user/" + id, deviceData, { headers }).pipe(
+    return this.http.put<ResponseApi<Device>>(this.apiUrl + "device/" + id, deviceData, { headers }).pipe(
       tap(
         response => {
           console.log(response);
