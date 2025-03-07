@@ -1,27 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomepageComponent } from './shared/components/homepage/homepage.component';
 import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { UserComponent } from './shared/components/user/user.component';
 import { DevicesComponent } from './shared/components/devices/devices.component';
 import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
+import { BorrowedDevicesComponent } from './shared/components/borrowed-devices/borrowed-devices.component';
+import { AvailableDevicesComponent } from './shared/components/available-devices/available-devices.component';
+import { NotfoudPageComponent } from './shared/components/notfoud-page/notfoud-page.component';
+import { RedirectComponent } from './shared/components/redirect/redirect.component';
+import { ReturningDeviceComponent } from './shared/components/returning-device/returning-device.component';
 
 const routes: Routes = [
   { path: 'dashboard',
     component: DashboardComponent,
     children: [
-      {path: 'home', component: HomepageComponent},
-      {path: 'user', component: UserComponent},
-      {path: 'device', component: DevicesComponent},
-     
+      {path: 'user', component: UserComponent, canActivate: [RoleGuard], data: { role: 'ADMIN' }},
+      {path: 'device', component: DevicesComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
+      {path: 'returning-device', component: ReturningDeviceComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
+      {path: 'borrowed-devices', component: BorrowedDevicesComponent, canActivate: [RoleGuard], data: { role: 'USER'}},
+      {path: 'available-devices', component: AvailableDevicesComponent, canActivate: [RoleGuard], data: { role: 'USER'}},
     ],
     canActivate: [AuthGuard]
    },
   { path: 'login', component: LoginComponent },
-  { path: '',   redirectTo: 'dashboard', pathMatch: 'full' }, // redirect to `first-component`
-  { path: '**', component: HomepageComponent },
-  { path: '**', component: UserComponent },
+  { path: '', component: RedirectComponent },
+  { path: '**', component: NotfoudPageComponent },
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@ import java.util.UUID;
 public class UserDevice {
     @Id
     @Column(name="id")
-    private Long id;
+    private UUID id;
 
     @Column(name = "device_name")
     private String deviceName;

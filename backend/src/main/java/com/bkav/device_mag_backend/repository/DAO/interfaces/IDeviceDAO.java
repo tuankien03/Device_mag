@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface IDeviceDAO {
     PageResponse<DeviceResponseDTO> getAllDevices(Pageable pageable);
     PageResponse<DeviceResponseDTO> getDevicesByName(String name,Pageable pageable);
+    PageResponse<DeviceResponseDTO> getAvalableDevice(Pageable pageable);
     DeviceResponseDTO getDeviceById(UUID id);
     DeviceResponseDTO saveDevice(SaveDeviceRequestDTO saveDeviceRequestDTO);
     void deleteDeviceById(UUID id);

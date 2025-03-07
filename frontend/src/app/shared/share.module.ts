@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { HomepageComponent } from './components/homepage/homepage.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,13 +24,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DeviceFormComponent } from './components/device-form/device-form.component';
+import { BorrowedDevicesComponent } from './components/borrowed-devices/borrowed-devices.component';
+import { AvailableDevicesComponent } from './components/available-devices/available-devices.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { NotfoudPageComponent } from './components/notfoud-page/notfoud-page.component';
+import { RedirectComponent } from './components/redirect/redirect.component';
+import { ReturningDeviceComponent } from './components/returning-device/returning-device.component';
+import { AssignmentFormComponent } from './components/assignment-form/assignment-form.component';
+
 
 
 
 
 
 @NgModule({
-  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, HomepageComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent],
+  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent  , BorrowedDevicesComponent, AvailableDevicesComponent, ConfirmDialogComponent, NotfoudPageComponent, RedirectComponent, ReturningDeviceComponent, AssignmentFormComponent],
   imports: [
     CommonModule,MatInputModule,
     MatCardModule,
@@ -45,13 +53,14 @@ import { DeviceFormComponent } from './components/device-form/device-form.compon
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule,      // ✅ Import MatDialogModule
-    MatFormFieldModule,   // ✅ Import MatFormFieldModule
-    MatInputModule,       // ✅ Import MatInputModule
-    MatButtonModule,      // ✅ Import MatButtonModule
+    MatDialogModule,      
+    MatFormFieldModule,  
+    MatInputModule,       
+    MatButtonModule,     
     ReactiveFormsModule,
-    MatTooltipModule  // ✅ Import ReactiveFormsModule
+    MatTooltipModule,
+    MatMenuModule
   ],
-  exports: [MessageComponent, MessageItemComponent,SidebarComponent,HomepageComponent,UserComponent,DevicesComponent,UserFormComponent]
+  exports: [MessageComponent, MessageItemComponent,SidebarComponent,UserComponent,DevicesComponent,UserFormComponent]
 })
 export class ShareModule { }

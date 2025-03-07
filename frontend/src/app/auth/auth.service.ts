@@ -70,6 +70,20 @@ export class AuthService {
     }
   }
 
+  getUserId(): string {
+    const token = localStorage.getItem('authToken');
+    if (!token) return '';
+    try {
+      const decoded: any = jwtDecode(token);
+      console.log(decoded.iss)
+      return decoded.iss || '';
+    } catch (error) {
+      console.error('Invalid token:', error);
+      this.messageService.addMessage({ message: 'Invalid token', status: false });
+      return '';
+    }
+  }
+
   hasRole(role: string): boolean {
     return this.getRole() === role;
   }

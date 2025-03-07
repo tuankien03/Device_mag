@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface IUserDeviceService {
     PageResponse<UserDeviceResponseDTO> findAllUserDevices(Pageable pageable);
     PageResponse<UserDeviceResponseDTO> findAllByUserId(UUID userId, Pageable pageable);
+    PageResponse<UserDeviceResponseDTO> findAllReturningUserDevices( Pageable pageable);
 }

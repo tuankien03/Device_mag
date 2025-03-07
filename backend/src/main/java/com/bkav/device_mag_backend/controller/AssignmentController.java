@@ -42,9 +42,14 @@ public class AssignmentController {
 
     @PutMapping("{id}/return")
     public ApiResponse<String> returnDevice(@PathVariable UUID id) {
-        System.out.println("returnDevice");
         assignmentService.returnDevice(id);
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,  "Thiết bị đã được trả!!");
+    }
+
+    @PutMapping("{id}/confirm")
+    public ApiResponse<String> confirmReturnedDevice(@PathVariable UUID id) {
+        assignmentService.confirmReturnedDevice(id);
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,  "Ghi nhận thiết bị đã được trả!!");
     }
 
     @DeleteMapping("{id}")

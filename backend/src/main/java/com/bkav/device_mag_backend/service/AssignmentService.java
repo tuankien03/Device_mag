@@ -73,20 +73,18 @@ public class AssignmentService implements IAssignmentService {
     @Override
     public void returnDevice(UUID id) {
         AssignmentResponseDTO assignmentResponseDTO =  assignmentDaoimpl.getAssignmentById(id);
-
         //update device
         DeviceResponseDTO device = deviceService.findDeviceById(assignmentResponseDTO.getDeviceId());
         SaveDeviceRequestDTO deviceRequestDTO = new SaveDeviceRequestDTO();
         deviceRequestDTO.setDeviceId(device.getDeviceId());
-        deviceRequestDTO.setStatus(DeviceStatus.AVAILABLE) ;
+        deviceRequestDTO.setStatus(DeviceStatus.RETURNING) ;
         deviceRequestDTO.setDescription(device.getDescription());
         deviceRequestDTO.setName(device.getName());
         deviceService.saveDevice(deviceRequestDTO);
-
         //update assignment
         SaveAssignmentRequestDTO assignmentRequestDTO = new SaveAssignmentRequestDTO();
         assignmentRequestDTO.setId(id);
-        assignmentRequestDTO.setReturnedAt(LocalDateTime.now());
+        assignmentRequestDTO.setReturnedAt(null);
         assignmentRequestDTO.setDeviceId(assignmentResponseDTO.getDeviceId());
         assignmentRequestDTO.setUserId(assignmentResponseDTO.getUserId());
         assignmentDaoimpl.saveAssignment(assignmentRequestDTO);
@@ -95,5 +93,26 @@ public class AssignmentService implements IAssignmentService {
     @Override
     public void deleteAssignmentById(UUID id) {
         assignmentDaoimpl.deleteAssignmentById(id);
+    }
+
+    @Override
+    public void confirmReturnedDevice(UUID id) {
+        AssignmentResponseDTO assignmentResponseDTO =  assignmentDaoimpl.getAssignmentById(id);
+        //update device
+        DeviceResponseDTO device = deviceService.findDeviceById(assignmentResponseDTO.getDeviceId());
+        SaveDeviceRequestDTO deviceRequestDTO = new SaveDeviceRequestDTO();
+        deviceRequestDTO.setDeviceId(device.getDeviceId());
+        deviceRequestDTO.setStatus(DeviceStatus.AVAILABLE) ;
+        deviceRequestDTO.setDescription(device.getDescription());
+        deviceRequestDTO.setName(device.getName());
+        deviceService.saveDevice(deviceRequestDTO);
+        //update assignment
+        SaveAssignmentRequestDTO assignmentRequestDTO = new SaveAssignmentRequestDTO();
+        assignmentRequestDTO.setId(id);
+        assignmentRequestDTO.setReturnedAt(LocalDateTime.now());
+        assignmentRequestDTO.setDeviceId(assignmentResponseDTO.getDeviceId());
+        assignmentRequestDTO.setUserId(assignmentResponseDTO.getUserId());
+        assignmentDaoimpl.saveAssignment(assignmentRequestDTO);
+
     }
 }

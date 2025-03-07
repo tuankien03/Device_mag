@@ -26,7 +26,7 @@ export class UserFormComponent implements OnInit {
     console.log(this.data)
     this.userForm = this.fb.group({
       username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
-      role: [this.data?.role || 'USER', Validators.required],
+      role: [{value: this.data?.role || 'USER', disabled: !!this.data}, Validators.required],
       password: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]]
     });
   }

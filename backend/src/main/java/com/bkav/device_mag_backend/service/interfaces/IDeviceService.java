@@ -14,6 +14,8 @@ public interface IDeviceService {
     DeviceResponseDTO saveDevice(SaveDeviceRequestDTO saveDeviceRequestDTO);
     PageResponse<DeviceResponseDTO> findAllDevices(Pageable pageable);
     PageResponse<DeviceResponseDTO> findDevicesByName(String name,Pageable pageable);
+    PageResponse<DeviceResponseDTO> findAvailableDevices(Pageable pageable);
     boolean checkDeviceAvailability(UUID id);
     void deleteDeviceById(UUID id);
+
 }

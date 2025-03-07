@@ -6,6 +6,7 @@ import com.bkav.device_mag_backend.model.DTO.request.SaveDeviceRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.DeviceResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.entity.Device;
+import com.bkav.device_mag_backend.model.entity.DeviceStatus;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IDeviceDAO;
 import com.bkav.device_mag_backend.repository.JpaRepository.DeviceRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,11 +41,25 @@ public class DeviceDaoImpl implements IDeviceDAO {
         System.out.println(pageData.getContent());
         return PageResponse.<DeviceResponseDTO>builder()
                 .totalPages(pageData.getTotalPages())
-                .totalElements(pageData.getNumberOfElements())
+                .totalElements(pageData.getTotalElements())
                 .currentPage(pageable.getPageNumber() + 1)
                 .pageSize(pageData.getSize())
                 .data(pageData.getContent().stream().map(deviceMapper::toDeviceResponseDTO).collect(Collectors.toList()))
                 .build();    }
+
+    @Override
+    public PageResponse<DeviceResponseDTO> getAvalableDevice(Pageable pageable) {
+        Page<Device> pageData = deviceRepository.findByStatus(DeviceStatus.AVAILABLE, pageable);
+        System.out.println(pageData.getContent());
+        return PageResponse.<DeviceResponseDTO>builder()
+                .totalPages(pageData.getTotalPages())
+                .totalElements(pageData.getTotalElements())
+                .currentPage(pageable.getPageNumber() + 1)
+                .pageSize(pageData.getSize())
+                .data(pageData.getContent().stream().map(deviceMapper::toDeviceResponseDTO).collect(Collectors.toList()))
+                .build();
+    }
+
 
     @Override
     public DeviceResponseDTO getDeviceById(UUID id) {

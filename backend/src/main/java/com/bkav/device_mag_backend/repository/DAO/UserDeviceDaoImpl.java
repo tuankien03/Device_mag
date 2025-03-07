@@ -3,6 +3,7 @@ package com.bkav.device_mag_backend.repository.DAO;
 import com.bkav.device_mag_backend.Mapper.UserDeviceMapper;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserDeviceResponseDTO;
+import com.bkav.device_mag_backend.model.entity.DeviceStatus;
 import com.bkav.device_mag_backend.model.entity.UserDevice;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDeviceDAO;
 import com.bkav.device_mag_backend.repository.JpaRepository.UserDeviceRepository;
@@ -34,6 +35,13 @@ public class UserDeviceDaoImpl implements IUserDeviceDAO {
         return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
     }
 
+    @Override
+    public PageResponse<UserDeviceResponseDTO> getReturningUserDevices(Pageable pageable) {
+        Page<UserDevice> userDevices = userDeviceRepository.findAllByStatusDeviceAndReturnedAtIsNull(DeviceStatus.RETURNING,pageable);
+        return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
+    }
+
+
     private PageResponse<UserDeviceResponseDTO> getUserDeviceResponseDTOPageResponse(Pageable pageable, Page<UserDevice> userDevices) {
         System.out.println(userDevices.getTotalElements());
         List<UserDeviceResponseDTO> userDeviceResponseDTOS = new ArrayList<>();
@@ -42,8 +50,8 @@ public class UserDeviceDaoImpl implements IUserDeviceDAO {
             userDeviceResponseDTOS.add(userDeviceResponseDTO);
         });
         return  PageResponse.<UserDeviceResponseDTO>builder()
-                .currentPage(pageable.getPageNumber())
-                .totalElements(userDevices.getNumberOfElements())
+                .currentPage(pageable.getPageNumber() + 1)
+                .totalElements(userDevices.getTotalElements())
                 .totalPages(userDevices.getTotalPages() + 1)
                 .pageSize(userDevices.getSize())
                 .data(userDeviceResponseDTOS)

@@ -13,4 +13,5 @@ public interface IAssignmentService {
     AssignmentResponseDTO updateAssignment(UUID id, SaveAssignmentRequestDTO requestDTO);
     void returnDevice(UUID id);
     void deleteAssignmentById(UUID id);
+    void confirmReturnedDevice(UUID id);
 }

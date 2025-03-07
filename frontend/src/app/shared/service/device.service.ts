@@ -37,6 +37,26 @@ export class DeviceService {
     return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device', { headers, params }).pipe();
   }
 
+  getAvailableDevices(pageable: Pageable, searchText: string): Observable<ResponseApi<PageResponse<Device[]>>> {
+    let params = new HttpParams().set('page', pageable.pageNumber.toString()).set('size', pageable.pageSize.toString());
+    if (pageable.property) {
+      params = params.set('property', pageable.property);
+    }
+    if (pageable.direction) {
+      params = params.set('direction', pageable.direction);
+    }
+    if (searchText) {
+      params = params.set('searchText', searchText);
+    }
+    this.messageService.addMessage({ message: 'Lấy danh sách thiết bị', status: true });
+    const token = localStorage.getItem(this.tokenKey) || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device/available', { headers, params }).pipe();
+  }
+
   getDeviceById(id: string) {
     const token = localStorage.getItem(this.tokenKey) || '';
     const headers = new HttpHeaders({
@@ -78,6 +98,23 @@ export class DeviceService {
       'Content-Type': 'application/json'
     });
     return this.http.put<ResponseApi<Device>>(this.apiUrl + "device/" + id, deviceData, { headers }).pipe(
+      tap(
+        response => {
+          console.log(response);
+        }
+      ), catchError(error => {
+        throw error.error;
+      })
+    )
+  }
+
+  deleteDevice(id: string) {
+    const token = localStorage.getItem(this.tokenKey) || '';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.delete<ResponseApi<string>>(this.apiUrl + "device/" + id, { headers }).pipe(
       tap(
         response => {
           console.log(response);

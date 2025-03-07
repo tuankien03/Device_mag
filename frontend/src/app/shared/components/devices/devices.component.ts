@@ -7,6 +7,8 @@ import { DeviceService } from '../../service/device.service';
 import { MessageService } from '../../service/message.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceFormComponent } from '../device-form/device-form.component';
+import { Observable } from 'rxjs';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-devices',
@@ -31,6 +33,9 @@ export class DevicesComponent implements OnInit {
       {
         name: 'Delete',
         icon: 'delete',
+      }, {
+        name: 'add',
+        icon: 'add',
       }
     ];
   }
@@ -65,7 +70,32 @@ export class DevicesComponent implements OnInit {
     )
   }
 
+  assignDevice() {
+
+  }
+   openConfirmDialog(): Observable<boolean> {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '350px',
+          data: { message: 'Bạn có chắc chắn muốn thực hiện hành động này?' }
+        });
+        return dialogRef.afterClosed()
+      }
+
   delete(id: string) {
+    this.openConfirmDialog().subscribe(
+      data => {
+        if(data) {
+          this.deviceService.deleteDevice(id).subscribe(
+            (data) => {
+              this.messageService.addMessage({ message: data.body, status: true });
+              this.loadData();
+            }, (error) => {
+              this.messageService.addMessage({ message: error.message, status: false });
+            }
+          )
+        }
+      }
+    )
 
   }
 

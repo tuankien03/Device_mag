@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         (data) => {
           if(data.status){
             this.messageService.addMessage({message: "Login success", status: true});
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/']);
           }
         },
         (error) => {

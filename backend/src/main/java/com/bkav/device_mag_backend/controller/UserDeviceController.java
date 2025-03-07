@@ -35,5 +35,20 @@ public class UserDeviceController {
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,userDeviceService.findAllUserDevices(pageable));
     }
 
+    @GetMapping("returning-device")
+    public ApiResponse<PageResponse<UserDeviceResponseDTO>> getAllReturningDevices(
+            @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
+            @RequestParam(value="size", required = false, defaultValue = "12") int size,
+            @RequestParam(value = "property", required = false, defaultValue = "assignedAt") String property,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
+    ) {
+        Sort sort = Sort.by(property).descending();
+        if (direction.equals("ASC")) {
+            sort = Sort.by(property).ascending();
+        }
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,userDeviceService.findAllReturningUserDevices(pageable));
+    }
+
 
 }

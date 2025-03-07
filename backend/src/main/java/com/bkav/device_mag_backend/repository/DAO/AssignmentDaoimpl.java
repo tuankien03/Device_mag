@@ -1,6 +1,7 @@
 package com.bkav.device_mag_backend.repository.DAO;
 
 import com.bkav.device_mag_backend.Mapper.AssignmentMapper;
+import com.bkav.device_mag_backend.exception.BadRequestException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveAssignmentRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.AssignmentResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
@@ -43,7 +44,9 @@ public class AssignmentDaoimpl implements IAssignmentDAO {
     @Override
     public AssignmentResponseDTO getAssignmentById(UUID assignmentId) {
         Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
-
+        if (assignment == null) {
+            throw new BadRequestException("Assignment not found");
+        }
         return  assignmentMapper.toAssignmentResponseDTO(assignment);
     }
 

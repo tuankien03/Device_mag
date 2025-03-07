@@ -7,6 +7,8 @@ import { MessageService } from '../../service/message.service';
 import { Pageable } from '../../model/pageable';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { Observable } from 'rxjs';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -64,15 +66,30 @@ export class UserComponent {
     )
   }
 
+  openConfirmDialog(): Observable<boolean> {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: { message: 'Bạn có chắc chắn muốn thực hiện hành động này?' }
+      });
+      return dialogRef.afterClosed()
+    }
+
   delete(id: string) {
-    this.userService.deleteUser(id).subscribe(
-      (data) => {
-        this.messageService.addMessage({ message: data.body, status: true });
-        this.loadData();
-      }, (error) => {
-        this.messageService.addMessage({ message: error.message, status: false });
+    this.openConfirmDialog().subscribe(
+      data => {
+        if(data) {
+          this.userService.deleteUser(id).subscribe(
+            (data) => {
+              this.messageService.addMessage({ message: data.body, status: true });
+              this.loadData();
+            }, (error) => {
+              this.messageService.addMessage({ message: error.message, status: false });
+            }
+          )
+        }
       }
     )
+    
   }
 
   formatDate(dateString: string): string {

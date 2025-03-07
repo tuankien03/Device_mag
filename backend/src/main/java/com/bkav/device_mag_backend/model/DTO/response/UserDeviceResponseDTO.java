@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 @Data
 public class UserDeviceResponseDTO {
-    private Long id;
+    private UUID id;
     private String deviceName;
     private String descriptionDevice;
     private DeviceStatus statusDevice;

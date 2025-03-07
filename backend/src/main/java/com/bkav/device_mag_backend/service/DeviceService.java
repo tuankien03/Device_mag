@@ -37,6 +37,11 @@ public class DeviceService implements IDeviceService {
     }
 
     @Override
+    public PageResponse<DeviceResponseDTO> findAvailableDevices(Pageable pageable) {
+        return deviceDao.getAvalableDevice(pageable);
+    }
+
+    @Override
     public boolean checkDeviceAvailability(UUID id) {
         DeviceResponseDTO device  = deviceDao.getDeviceById(id);
         if (device.getStatus().getValue().equals("ASSIGNED")) {

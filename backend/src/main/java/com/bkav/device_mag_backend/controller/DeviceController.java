@@ -57,6 +57,21 @@ public class DeviceController {
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAllDevices(pageable));
     }
 
+    @GetMapping("available")
+    public ApiResponse<PageResponse<DeviceResponseDTO>> getAllAvailableDevices(
+            @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
+            @RequestParam(value="size", required = false, defaultValue = "12") int size,
+            @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
+    ) {
+        Sort sort = Sort.by(property).descending();
+        if (direction.equals("ASC")) {
+            sort = Sort.by(property).ascending();
+        }
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAvailableDevices(pageable));
+    }
+
     @PostMapping
     public ApiResponse<DeviceResponseDTO> saveDevice(@RequestBody SaveDeviceRequestDTO request) {
         System.out.println(request);

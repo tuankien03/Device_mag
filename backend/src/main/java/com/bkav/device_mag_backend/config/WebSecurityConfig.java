@@ -30,7 +30,7 @@ public class WebSecurityConfig {
     };
 
     private final String[] PRIVATE_URLS_ADMIN = {
-            "/api/user/**","/api/device/**","api/assignment/**"
+            "/api/user/**","/api/device/**",
     };
 
     private final CustomJwtDecoder customJwtDecoder;
@@ -40,7 +40,7 @@ public class WebSecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers(PUBLIC_URLS)
                 .permitAll()
-                .requestMatchers("/api/user/{id}/**")
+                .requestMatchers("/api/user/{id}/**", "/api/assignment/**", "/api/device/available")
                 .hasAnyRole("USER", "ADMIN")
                 .requestMatchers(PRIVATE_URLS_ADMIN)
                 .hasRole("ADMIN")

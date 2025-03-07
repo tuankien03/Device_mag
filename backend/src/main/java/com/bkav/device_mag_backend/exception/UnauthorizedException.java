@@ -11,6 +11,6 @@ public class UnauthorizedException extends RuntimeException implements ToErrorRe
 
   @Override
   public ResponseEntity<ApiResponse<String>> toErrorResponseEntity() {
-    return  ResponseEntity.status(CodeStatus.UNAUTHORIZED).body(new ApiResponse<>(CodeStatus.UNAUTHORIZED,getMessage(),null));
+    return  ResponseEntity.status(5000).body(new ApiResponse<>(CodeStatus.UNAUTHORIZED,getMessage(),null));
   }
 }

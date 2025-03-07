@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -78,9 +77,9 @@ public class UserController {
             @RequestParam(value = "property", required = false, defaultValue = "assignedAt") String property,
             @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
     ) {
-        Sort sort = Sort.by(property).descending();
-        if (direction.equals("ASC")) {
-            sort = Sort.by(property).ascending();
+        Sort sort = Sort.by(property);
+        if (direction.equals("DES")) {
+            sort = Sort.by(property).descending();
         }
         Pageable pageable = PageRequest.of(page - 1, size, sort);
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,userDeviceService.findAllByUserId(id, pageable));

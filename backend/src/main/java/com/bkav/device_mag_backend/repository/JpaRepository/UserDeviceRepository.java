@@ -1,5 +1,6 @@
 package com.bkav.device_mag_backend.repository.JpaRepository;
 
+import com.bkav.device_mag_backend.model.entity.DeviceStatus;
 import com.bkav.device_mag_backend.model.entity.UserDevice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,4 +12,7 @@ import java.util.UUID;
 @Repository
 public interface UserDeviceRepository extends JpaRepository<UserDevice, Long> {
     Page<UserDevice> findAllByUserId(UUID userId, Pageable pageable);
+    Page<UserDevice> findAllByStatusDevice(DeviceStatus statusDevice, Pageable pageable);
+    Page<UserDevice> findAllByStatusDeviceAndReturnedAtIsNull(DeviceStatus statusDevice, Pageable pageable);
+
 }

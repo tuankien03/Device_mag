@@ -8,6 +8,10 @@
     height: 30px;
     margin-right: 10px;
 }
+.menu-content {
+    display: flex;
+    flex-direction: column;
+}
 
 .mat-toolbar {
     height: 60px;

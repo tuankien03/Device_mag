@@ -29,11 +29,12 @@ export class TableComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     console.log("table init::")
-    this.pageableChange.emit(this.pageable)
     this.dataSource.sort = this.sort;
+    this.pageableChange.emit(this.pageable)
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.dataSource.sort = this.sort;
     if (changes['totalItems']) {
         console.log("total change::", this.totalItems)
     }
@@ -53,7 +54,6 @@ export class TableComponent implements AfterViewInit, OnChanges {
 
   onActionClick(element: any, nameAction: string) {
     const idValue = element?.id || element?.deviceId || element?.userId || null;
-
     this.onAction.emit({id: idValue, nameAction});
   }
 
