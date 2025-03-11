@@ -14,4 +14,6 @@ import java.util.UUID;
 public interface DeviceRepository extends JpaRepository<Device, UUID> {
     Page<Device> findDevicesByNameContaining(String name, Pageable pageable);
     Page<Device> findByStatus(DeviceStatus status, Pageable pageable);
+
+    Page<Device> findAllByNameContaining(String name, Pageable pageable);
 }

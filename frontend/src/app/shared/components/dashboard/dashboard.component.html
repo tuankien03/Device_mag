@@ -7,8 +7,6 @@
     <button mat-button id="account" [matMenuTriggerFor]="accountMenu" class="top-menu-item">
         <mat-icon>account_circle</mat-icon> {{ authService.getUsername() }}
     </button>
-
-    <!-- Menu thông tin tài khoản -->
     <mat-menu #accountMenu="matMenu" class="account-menu">
         <div class="menu-content">
             <button mat-button color="primary" (click)="openUserInfor()" >Xem thông tin và đổi mật khẩu</button>
@@ -21,21 +19,26 @@
     <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" opened="true" mode="side" class="side-nav">   
         <div class="side-nav-items">
             <div *ngIf="role === 'ADMIN'">
-                <a mat-button routerLink="user" class="side-menu-item"><mat-icon>people</mat-icon> Người dùng</a>
+                <a mat-button routerLink="user" class="side-menu-item"><mat-icon>people</mat-icon> Quản lý Người dùng</a>
             </div>
 
             <div *ngIf="role === 'ADMIN'">
-                <a mat-button routerLink="device" class="side-menu-item"><mat-icon>devices</mat-icon> Thiết bị</a>
+                <a mat-button routerLink="device" class="side-menu-item"><mat-icon>devices</mat-icon> Quản lý Thiết bị</a>
             </div>
             <div *ngIf="role === 'ADMIN'">
-                <a mat-button routerLink="returning-device" class="side-menu-item"><mat-icon>send_to_mobile</mat-icon> Thiết bị đợi trả</a>
+                <a mat-button routerLink="available-devices" class="side-menu-item"><mat-icon>live_tv</mat-icon> Thiết bị có sẵn </a>
             </div>
+            <div *ngIf="role === 'ADMIN'">
+                <a mat-button routerLink="current-assignment" class="side-menu-item"><mat-icon>assignment_ind</mat-icon> Thiết bị đang cho mượn</a>
+            </div>
+            <div *ngIf="role === 'ADMIN'">
+                <a mat-button routerLink="returning-device" class="side-menu-item"><mat-icon>assignment_late</mat-icon> Thiết bị đợi trả</a>
+            </div>
+
             <div *ngIf="role === 'USER'">
                 <a mat-button routerLink="borrowed-devices" class="side-menu-item"><mat-icon>send_to_mobile</mat-icon> Thiết bị đã mượn </a>
             </div>
-            <div *ngIf="role === 'USER'">
-                <a mat-button routerLink="available-devices" class="side-menu-item"><mat-icon>devices</mat-icon> Thiết bị có sẵn </a>
-            </div>
+            
         </div>
 
     </mat-sidenav>

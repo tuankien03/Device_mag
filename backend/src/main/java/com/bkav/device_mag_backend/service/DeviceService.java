@@ -27,8 +27,8 @@ public class DeviceService implements IDeviceService {
     }
 
     @Override
-    public PageResponse<DeviceResponseDTO> findAllDevices(Pageable pageable) {
-        return deviceDao.getAllDevices(pageable);
+    public PageResponse<DeviceResponseDTO> findAllDevices(String deviceName ,Pageable pageable) {
+        return deviceDao.getAllDevices(deviceName, pageable);
     }
 
     @Override

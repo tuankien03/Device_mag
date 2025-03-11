@@ -1,7 +1,7 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AfterViewInit, Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CellAction } from '../../model/cellaction';
 import { Pageable } from '../../model/pageable';
@@ -18,6 +18,7 @@ export class TableComponent implements AfterViewInit, OnChanges {
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: MatTableDataSource<any>;
   @Input() cellActions?: CellAction [] = [];
+  @Input() hasAddButton: boolean = false;
 
   @Output() pageableChange = new EventEmitter<Pageable>();
   @Output() onAction = new EventEmitter<{id: string, nameAction: string}>();
@@ -31,6 +32,11 @@ export class TableComponent implements AfterViewInit, OnChanges {
     console.log("table init::")
     this.dataSource.sort = this.sort;
     this.pageableChange.emit(this.pageable)
+    this.sort.sortChange.subscribe((sort: Sort) => {
+      this.pageable.property = sort.active; // Cột được sắp xếp
+      this.pageable.direction = sort.direction.toUpperCase(); // 'asc' | 'desc'
+      this.pageableChange.emit(this.pageable); // Gửi sự kiện để gọi API mới
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

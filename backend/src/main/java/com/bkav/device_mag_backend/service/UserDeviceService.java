@@ -30,4 +30,9 @@ public class UserDeviceService implements IUserDeviceService {
         return userDeviceDaoImpl.getReturningUserDevices(pageable);
     }
 
+    @Override
+    public PageResponse<UserDeviceResponseDTO> findAllBorrowingUserDevices(Pageable pageable) {
+        return  userDeviceDaoImpl.getBorrowingUserDevices(pageable);
+    }
+
 }

@@ -12,11 +12,11 @@ export class RedirectComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    const role = this.authService.getRole(); // Lấy role của user
+    const role = this.authService.getRole();
     if (role === 'ADMIN') {
       this.router.navigate(['/dashboard/user']);
     } else {
-      this.router.navigate(['/dashboard/available-devices']);
+      this.router.navigate(['/dashboard/borrowed-devices']);
     }
   }
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface IDeviceService {
     DeviceResponseDTO findDeviceById(UUID id);
     DeviceResponseDTO saveDevice(SaveDeviceRequestDTO saveDeviceRequestDTO);
-    PageResponse<DeviceResponseDTO> findAllDevices(Pageable pageable);
+    PageResponse<DeviceResponseDTO> findAllDevices(String deviceName, Pageable pageable);
     PageResponse<DeviceResponseDTO> findDevicesByName(String name,Pageable pageable);
     PageResponse<DeviceResponseDTO> findAvailableDevices(Pageable pageable);
     boolean checkDeviceAvailability(UUID id);

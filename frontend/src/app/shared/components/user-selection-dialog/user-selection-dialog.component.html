@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Chọn người dùng</h2>
+<mat-dialog-content class="dialog-content">
+  <!-- Ô tìm kiếm -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Tìm kiếm</mat-label>
+    <input matInput [formControl]="searchControl" placeholder="Nhập tên người dùng">
+  </mat-form-field>
+
+  <!-- Danh sách User với Scroll -->
+  <div class="user-list">
+    <mat-list>
+      <mat-list-item *ngFor="let user of filteredUsers" (click)="selectUser(user)"
+                     [class.selected]="selectedUser?.id === user.id">
+        {{ user.username }}
+      </mat-list-item>
+    </mat-list>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Hủy</button>
+  <button mat-button color="primary" (click)="confirmSelection()" [disabled]="!selectedUser">
+    Chọn
+  </button>
+</mat-dialog-actions>

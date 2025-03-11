@@ -10,6 +10,7 @@ import { CellAction } from '../../model/cellaction';
 import { UserService } from '../../service/user.service';
 import { Observable } from 'rxjs';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { UserSelectionDialogComponent } from '../user-selection-dialog/user-selection-dialog.component';
 
 @Component({
   selector: 'app-available-devices',
@@ -29,10 +30,9 @@ export class AvailableDevicesComponent implements OnInit {
     console.log(Object.keys(<Device>{}))
     this.config = [
       {
-        name: 'Borrow',
-        icon: 'back_hand',
+        name: 'Add',
+        icon: 'add',
       },
-
     ];
   }
   ngOnInit(): void {
@@ -44,31 +44,42 @@ export class AvailableDevicesComponent implements OnInit {
           data: { message: 'Bạn có chắc chắn muốn thực hiện hành động này?' }
         });
         return dialogRef.afterClosed()
-      }
+  }
 
 
   onAction(event: { id: string, nameAction: string }) {
-    if (event.nameAction === 'Borrow') {
-      this.borrowDevice(event.id);
+    if (event.nameAction === 'Add') {
+      this.assignDevice(event.id);
     }
   }
 
-  borrowDevice(id: string) {
-    this.openConfirmDialog().subscribe(
-      data => {
-        if(data) {
-          this.userService.borrowDevice(id).subscribe(
-            data => {
-              this.messageService.addMessage({message: "Mượn thiết bị thành công", status: true})
-              this.loadData();
-            }, error => {
-              this.messageService.addMessage({message: error.message , status: true})
-            }
-          )
-        }
+  assignDevice(deviceId: string) {
+    this.userService.getUsers({ pageNumber: 1, pageSize: 1000, property: '', direction: '' }, '').subscribe(
+      (data) => {
+        const dialogRef = this.dialog.open(UserSelectionDialogComponent, {
+          width: '400px',
+          data: data.body.data
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.userService.assignDevice(deviceId, result.id).subscribe(
+              (data) => {
+                this.messageService.addMessage({message: 'Thiết bị đã được gán thành công', status: true});
+                this.loadData();
+              },
+              (error) => {
+                this.messageService.addMessage({message: error.message, status: false});
+              }
+            );
+          }
+        });
       }
     )
   }
+
+
+   
+  
   
 
 

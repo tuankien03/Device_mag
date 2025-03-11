@@ -47,14 +47,15 @@ public class DeviceController {
             @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
             @RequestParam(value="size", required = false, defaultValue = "12") int size,
             @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
+            @RequestParam(value = "searchText", required = false, defaultValue = "") String deviceName
     ) {
-        Sort sort = Sort.by(property).descending();
-        if (direction.equals("ASC")) {
-            sort = Sort.by(property).ascending();
+        Sort sort = Sort.by(property).ascending();
+        if (direction.equals("desc")) {
+            sort = Sort.by(property).descending();
         }
         Pageable pageable = PageRequest.of(page - 1, size, sort);
-        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAllDevices(pageable));
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAllDevices(deviceName, pageable));
     }
 
     @GetMapping("available")
@@ -64,9 +65,9 @@ public class DeviceController {
             @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
             @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction
     ) {
-        Sort sort = Sort.by(property).descending();
-        if (direction.equals("ASC")) {
-            sort = Sort.by(property).ascending();
+        Sort sort = Sort.by(property);
+        if (direction.equals("desc")) {
+            sort = Sort.by(property).descending();
         }
         Pageable pageable = PageRequest.of(page - 1, size, sort);
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,deviceService.findAvailableDevices(pageable));

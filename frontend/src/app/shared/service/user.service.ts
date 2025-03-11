@@ -11,6 +11,7 @@ import { Device } from '../model/device';
 import { AuthService } from 'src/app/auth/auth.service';
 import { throwError } from 'rxjs';
 import { Assignment } from '../model/assignment';
+import { UserDevice } from '../model/userdevice';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class UserService {
     return this.http.get<ResponseApi<PageResponse<User[]>>>(this.apiUrl + 'user', { headers, params }).pipe();
   }
   
-  getReturningDevices(pageable: Pageable): Observable<ResponseApi<PageResponse<Device[]>>> {
+  getReturningDevices(pageable: Pageable): Observable<ResponseApi<PageResponse<UserDevice[]>>> {
     let params = new HttpParams().set('page', pageable.pageNumber.toString()).set('size', pageable.pageSize.toString());
     if (pageable.property) {
       params = params.set('property', pageable.property);
@@ -56,7 +57,7 @@ export class UserService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'user-device/returning-device', { headers, params }).pipe(
+    return this.http.get<ResponseApi<PageResponse<UserDevice[]>>>(this.apiUrl + 'user-device/returning-device', { headers, params }).pipe(
       tap(response => {
         console.log(response);
       }),
@@ -145,8 +146,7 @@ export class UserService {
     )
   }
 
-  borrowDevice(deviceId: string) {
-    const userId = this.authService.getUserId();
+  assignDevice(deviceId: string, userId: string): Observable<ResponseApi<Assignment>> {
     const token = localStorage.getItem(this.tokenKey) || '';
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,

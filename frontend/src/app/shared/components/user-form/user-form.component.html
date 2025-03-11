@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Chỉnh sửa User' : 'Tạo User' }}</h2>
 <mat-dialog-content>
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="userForm" >
     <mat-form-field appearance="outline">
       <mat-label>Tên đăng nhập</mat-label>
       <input matInput formControlName="username" placeholder="Nhập tên đăng nhập">
@@ -24,7 +24,7 @@
 
     <mat-dialog-actions align="end">
       <button mat-button (click)="onClose()">Hủy</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+      <button mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="onSubmit()">
         {{ isEditMode ? 'Cập nhật' : 'Tạo User' }}
       </button>
     </mat-dialog-actions>

@@ -10,4 +10,5 @@ public interface IUserDeviceDAO {
     PageResponse<UserDeviceResponseDTO> getAll(Pageable pageable);
     PageResponse<UserDeviceResponseDTO> getUserDeviceByUserId(UUID userId, Pageable pageable);
     PageResponse<UserDeviceResponseDTO> getReturningUserDevices(Pageable pageable);
+    PageResponse<UserDeviceResponseDTO> getBorrowingUserDevices(Pageable pageable);
 }

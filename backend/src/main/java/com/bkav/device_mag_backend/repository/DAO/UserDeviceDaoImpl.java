@@ -41,6 +41,12 @@ public class UserDeviceDaoImpl implements IUserDeviceDAO {
         return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
     }
 
+    @Override
+    public PageResponse<UserDeviceResponseDTO> getBorrowingUserDevices(Pageable pageable) {
+        Page<UserDevice> userDevices = userDeviceRepository.findAllByStatusDeviceAndReturnedAtIsNull(DeviceStatus.ASSIGNED,pageable);
+        return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
+    }
+
 
     private PageResponse<UserDeviceResponseDTO> getUserDeviceResponseDTOPageResponse(Pageable pageable, Page<UserDevice> userDevices) {
         System.out.println(userDevices.getTotalElements());

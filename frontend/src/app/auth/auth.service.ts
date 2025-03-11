@@ -5,7 +5,7 @@ import { MessageService } from '../shared/service/message.service';
 import { Observable, of } from 'rxjs';
 import { AuthenticationResponse } from '../shared/model/authenticationresponse';
 import { ResponseApi } from '../shared/model/responseapi';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
@@ -35,13 +35,21 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): Observable<boolean> {
     const token = localStorage.getItem('authToken');
-    this.http.post<any>(this.apiUrl + 'introspect', { token }).subscribe(
-      (data) => {
-      }
+    if (!token) return of(false);
+    
+    return this.http.post<any>(this.apiUrl + 'introspect', { token }).pipe(
+      map(data => {
+        const isValid = data.body.valid;
+        console.log('Token is valid:', isValid);
+        return isValid;
+      }),
+      catchError(() => {
+        console.log('Token validation failed');
+        return of(false);
+      })
     );
-    return token !== null;
   }
 
   getRole(): string | null {

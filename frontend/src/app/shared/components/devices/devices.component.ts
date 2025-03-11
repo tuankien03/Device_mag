@@ -33,10 +33,7 @@ export class DevicesComponent implements OnInit {
       {
         name: 'Delete',
         icon: 'delete',
-      }, {
-        name: 'add',
-        icon: 'add',
-      }
+      },
     ];
   }
   ngOnInit(): void {
@@ -135,7 +132,24 @@ export class DevicesComponent implements OnInit {
     this.loadData();
   }
   onSearch(value: string) {
-
+    this.deviceService.getDevices(this.pageable, value).subscribe(
+      (data) => {
+        this.totalData = data.body.totalElements;
+        this.devices = [];
+        data.body.data.forEach((element: any) => {
+          this.devices.push({
+            deviceId: element.deviceId,
+            name: element.name,
+            description: element.description,
+            status: element.status,
+            createdAt: this.formatDate(element.createdAt),
+            updatedAt: this.formatDate(element.updatedAt)
+          });
+        });
+        console.log(this.devices)
+        this.dataSource = new MatTableDataSource<Device>(this.devices);
+      }
+    )
   }
 
   onAdd() {

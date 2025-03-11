@@ -11,6 +11,8 @@ import com.bkav.device_mag_backend.service.interfaces.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -55,8 +57,19 @@ public class UserService implements IUserService {
             throw new BadRequestException("Yêu cầu không hợp lệ!!");
         }
         System.out.println(userDaoImpl.findById(id));
-        if (!saveUserRequestDTO.getUsername().equals(userDaoImpl.findById(id).getUsername())) {
+        UserResponseDTO changingUser = userDaoImpl.findById(id);
+        if (!saveUserRequestDTO.getUsername().equals(changingUser.getUsername())) {
             throw  new BadRequestException("Không thể sửa username!!");
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getAuthorities());
+        if (!saveUserRequestDTO.getRole().equals(changingUser.getRole())) {
+            authentication.getAuthorities().forEach(a -> {
+            System.out.println(a.getAuthority());
+            if (a.getAuthority().equals("ROLE_USER")) {
+                throw new BadRequestException("Không thể sửa role!!");
+            }
+        });
         }
         String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
         saveUserRequestDTO.setPassword(encodedPassword);
@@ -77,6 +90,11 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUserById(UUID id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserAuthenticationDTO user = userDaoImpl.findUserByUsername(authentication.getName());
+        if (user.getUserID().equals(id)) {
+            throw new BadRequestException("Không thể xóa chính mình!!");
+        }
         userDaoImpl.deleteById(id);
     }
 

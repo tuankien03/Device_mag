@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IDeviceDAO {
-    PageResponse<DeviceResponseDTO> getAllDevices(Pageable pageable);
+    PageResponse<DeviceResponseDTO> getAllDevices(String deviceName, Pageable pageable);
     PageResponse<DeviceResponseDTO> getDevicesByName(String name,Pageable pageable);
     PageResponse<DeviceResponseDTO> getAvalableDevice(Pageable pageable);
     DeviceResponseDTO getDeviceById(UUID id);

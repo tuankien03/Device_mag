@@ -11,16 +11,20 @@ import { AvailableDevicesComponent } from './shared/components/available-devices
 import { NotfoudPageComponent } from './shared/components/notfoud-page/notfoud-page.component';
 import { RedirectComponent } from './shared/components/redirect/redirect.component';
 import { ReturningDeviceComponent } from './shared/components/returning-device/returning-device.component';
+import { AssignedDevicesComponent } from './shared/components/assigned-devices/assigned-devices.component';
 
 const routes: Routes = [
+  { path: 'dashboard', component: RedirectComponent },
   { path: 'dashboard',
     component: DashboardComponent,
     children: [
       {path: 'user', component: UserComponent, canActivate: [RoleGuard], data: { role: 'ADMIN' }},
       {path: 'device', component: DevicesComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
       {path: 'returning-device', component: ReturningDeviceComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
+      {path: 'available-devices', component: AvailableDevicesComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
+      {path: 'current-assignment', component: AssignedDevicesComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
       {path: 'borrowed-devices', component: BorrowedDevicesComponent, canActivate: [RoleGuard], data: { role: 'USER'}},
-      {path: 'available-devices', component: AvailableDevicesComponent, canActivate: [RoleGuard], data: { role: 'USER'}},
+
     ],
     canActivate: [AuthGuard]
    },

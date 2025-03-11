@@ -6,8 +6,10 @@ import com.bkav.device_mag_backend.model.DTO.request.SaveDeviceRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.AssignmentResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.DeviceResponseDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
+import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.model.entity.Device;
 import com.bkav.device_mag_backend.model.entity.DeviceStatus;
+import com.bkav.device_mag_backend.model.entity.UserRole;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IAssignmentDAO;
 import com.bkav.device_mag_backend.service.interfaces.IAssignmentService;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
@@ -42,8 +44,12 @@ public class AssignmentService implements IAssignmentService {
         if(requestDTO.getId() != null) {
             throw new BadRequestException("Đã có người mượn!!!");
         }
-        if( userService.findUserById(requestDTO.getUserId()).getId() == null) {
+        UserResponseDTO user = userService.findUserById(requestDTO.getUserId());
+        if( user.getId() == null) {
             throw new BadRequestException("User không tồn tại!!");
+        }
+        if(user.getRole().equals(UserRole.ADMIN)) {
+            throw new BadRequestException("Không thể mượn cho admin!!");
         }
         DeviceResponseDTO device = deviceService.findDeviceById(requestDTO.getDeviceId());
         if(device == null) {
@@ -92,6 +98,16 @@ public class AssignmentService implements IAssignmentService {
 
     @Override
     public void deleteAssignmentById(UUID id) {
+        AssignmentResponseDTO assignmentResponseDTO =  assignmentDaoimpl.getAssignmentById(id);
+        //update device
+        DeviceResponseDTO device = deviceService.findDeviceById(assignmentResponseDTO.getDeviceId());
+        SaveDeviceRequestDTO deviceRequestDTO = new SaveDeviceRequestDTO();
+        deviceRequestDTO.setDeviceId(device.getDeviceId());
+        deviceRequestDTO.setStatus(DeviceStatus.AVAILABLE) ;
+        deviceRequestDTO.setDescription(device.getDescription());
+        deviceRequestDTO.setName(device.getName());
+        deviceService.saveDevice(deviceRequestDTO);
+
         assignmentDaoimpl.deleteAssignmentById(id);
     }
 

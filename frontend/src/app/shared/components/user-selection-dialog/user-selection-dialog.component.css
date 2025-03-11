@@ -1,0 +1,27 @@
+.dialog-content {
+    max-height: 350px; /* Giới hạn chiều cao */
+    overflow: hidden;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .user-list {
+    max-height: 200px; /* Hiển thị tối đa 5 user */
+    min-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  mat-list-item {
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  .selected {
+    background-color: #e0f7fa;
+    font-weight: bold;
+  }
+  

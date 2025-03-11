@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -37,12 +38,12 @@ public class UserController {
             @RequestParam(value = "page" , required = false, defaultValue = "1") int page,
             @RequestParam(value="size", required = false, defaultValue = "12") int size,
             @RequestParam(value = "property", required = false, defaultValue = "createdAt") String property,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
+            @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction,
             @RequestParam(value = "searchText", required = false, defaultValue = "") String username
     ) {
-        Sort sort = Sort.by(property).descending();
-        if (direction.equals("ASC")) {
-            sort = Sort.by(property).ascending();
+        Sort sort = Sort.by(property).ascending();
+        if (direction.equals("desc")) {
+            sort = Sort.by(property).descending();
         }
         Pageable pageable = PageRequest.of(page - 1, size, sort);
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT,userService.findUsersByUsername(username, pageable));
@@ -101,6 +102,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public  ApiResponse<String> deleteUser(@PathVariable UUID id) {
             userService.deleteUserById(id);

@@ -79,6 +79,7 @@ public class AuthenticationService implements IAuthenticationService {
                 .claim("scope", user.getRole().getValue())
                 .issuer(user.getUserID().toString())
                 .issueTime(new Date())
+                .jwtID(UUID.randomUUID().toString())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()))
                 .build();
 
