@@ -16,7 +16,6 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./devices.component.css']
 })
 export class DevicesComponent implements OnInit {
-
   totalData: number;
   devices: Device[] = [];
   config: Array<CellAction>;
@@ -132,6 +131,7 @@ export class DevicesComponent implements OnInit {
     this.loadData();
   }
   onSearch(value: string) {
+    this.pageable.pageNumber = 1;
     this.deviceService.getDevices(this.pageable, value).subscribe(
       (data) => {
         this.totalData = data.body.totalElements;
@@ -161,6 +161,7 @@ export class DevicesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Device mới:', result);
+        this.loadData();
       }
     });
   }

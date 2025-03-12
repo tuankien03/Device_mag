@@ -6,7 +6,7 @@ import com.bkav.device_mag_backend.model.DTO.request.AuthenticationRequest;
 import com.bkav.device_mag_backend.model.DTO.request.IntrospectRequest;
 import com.bkav.device_mag_backend.model.DTO.response.AuthenticationResponse;
 import com.bkav.device_mag_backend.model.DTO.response.IntrospectResponse;
-import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
+import com.bkav.device_mag_backend.model.DTO.response.UserAuthentication;
 import com.bkav.device_mag_backend.service.interfaces.IAuthenticationService;
 import com.bkav.device_mag_backend.service.interfaces.IUserService;
 import com.nimbusds.jose.*;
@@ -42,7 +42,7 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-        UserAuthenticationDTO user = userService.findUserByUsername(authenticationRequest.getUsername());
+        UserAuthentication user = userService.findUserByUsername(authenticationRequest.getUsername());
         if(user == null) {
             throw new EntityNotFoundException("User không tồn tại!!");
         }
@@ -71,7 +71,7 @@ public class AuthenticationService implements IAuthenticationService {
         return IntrospectResponse.builder().valid(verifiedToken && expiration.after(new Date())).build();
     }
 
-    public String generateToken(UserAuthenticationDTO user) {
+    public String generateToken(UserAuthentication user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
@@ -95,7 +95,7 @@ public class AuthenticationService implements IAuthenticationService {
         }
     }
 
-    public String generateRefreshToken(UserAuthenticationDTO user) {
+    public String generateRefreshToken(UserAuthentication user) {
         return generateToken(user);
     }
 

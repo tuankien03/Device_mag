@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Xem thông tin</h2>
+<mat-dialog-content>
+  <form [formGroup]="userForm" >
+    <mat-form-field appearance="outline">
+      <mat-label>Tên đăng nhập</mat-label>
+      <input matInput formControlName="username" placeholder="Nhập tên đăng nhập">
+      <mat-error *ngIf="userForm.get('username')?.invalid">Tên đăng nhập là bắt buộc</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Vai trò</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="ADMIN">Admin</mat-option>
+        <mat-option value="USER">User</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userForm.get('role')?.invalid">Vui lòng chọn vai trò</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mật khẩu cũ</mat-label>
+      <input matInput type="password" formControlName="oldPassword" placeholder="Nhập mật khẩu cũ">
+      <mat-error *ngIf="userForm.get('oldPassword')?.invalid">Mật khẩu phải ít nhất 6 ký tự</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mật khẩu mới</mat-label>
+      <input matInput type="password" formControlName="newPassword" placeholder="Nhập mật khẩu mới">
+      <mat-error *ngIf="userForm.get('newPassword')?.invalid">Mật khẩu phải ít nhất 6 ký tự</mat-error>
+    </mat-form-field>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onClose()">Hủy</button>
+      <button mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="onSubmit()">
+        Đổi mật khẩu
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

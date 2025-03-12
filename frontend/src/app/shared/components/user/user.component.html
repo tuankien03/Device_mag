@@ -1,2 +1,2 @@
 <app-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [cellActions]="config" hasAddButton="true"
-    (onAction)="onAction($event)" (search)="onSearch($event)" (add)="onAdd()" (refresh)="onRefresh()" (pageableChange)="onPageChange($event)" [totalItems]="totalData"> ></app-table>
+    (onAction)="onAction($event)" (search)="onSearch($event)" (add)="onAdd()" (refresh)="onRefresh()" [pageable]="pageable" (pageableChange)="onPageChange($event)" [totalItems]="totalData"> ></app-table>

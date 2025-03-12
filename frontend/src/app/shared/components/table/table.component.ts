@@ -12,13 +12,14 @@ import { Pageable } from '../../model/pageable';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements AfterViewInit, OnChanges {
-  pageable: Pageable = {pageNumber: 1, pageSize: 20 , property: '', direction: ''};
+  @Input() pageable: Pageable = {pageNumber: 1, pageSize: 20 , property: '', direction: ''};
 
   @Input() totalItems: number = 0;
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: MatTableDataSource<any>;
   @Input() cellActions?: CellAction [] = [];
   @Input() hasAddButton: boolean = false;
+  @Input() disableAction: (element: any, action: string) => boolean = () => false;
 
   @Output() pageableChange = new EventEmitter<Pageable>();
   @Output() onAction = new EventEmitter<{id: string, nameAction: string}>();
@@ -26,16 +27,16 @@ export class TableComponent implements AfterViewInit, OnChanges {
   @Output() add = new EventEmitter<void>();
   @Output() refresh = new EventEmitter<void>();
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
-    console.log("table init::")
     this.dataSource.sort = this.sort;
     this.pageableChange.emit(this.pageable)
     this.sort.sortChange.subscribe((sort: Sort) => {
-      this.pageable.property = sort.active; // Cột được sắp xếp
-      this.pageable.direction = sort.direction.toUpperCase(); // 'asc' | 'desc'
-      this.pageableChange.emit(this.pageable); // Gửi sự kiện để gọi API mới
+      this.pageable.property = sort.active; 
+      this.pageable.direction = sort.direction.toUpperCase(); 
+      this.pageableChange.emit(this.pageable); 
     });
   }
 
@@ -47,6 +48,7 @@ export class TableComponent implements AfterViewInit, OnChanges {
   }
 
   onSearch(event: any) {
+    this.paginator.firstPage(); 
     this.search.emit(event.target.value);
   }
 
@@ -73,7 +75,7 @@ export class TableComponent implements AfterViewInit, OnChanges {
     this.pageable.pageSize = event.pageSize;
     this.pageableChange.emit(this.pageable);
   }
-  
+
 
 
 }

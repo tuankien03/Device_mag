@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from '../../service/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { ChangeUserinforFormComponent } from '../change-userinfor-form/change-userinfor-form.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
           (data) => {
             console.log(data)
             const user = { ...data.body, id: userId };
-            const dialogRef = this.dialog.open(UserFormComponent, {
+            const dialogRef = this.dialog.open(ChangeUserinforFormComponent, {
               width: '400px',
               data: user 
             });

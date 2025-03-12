@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Device, DEVICE_KEYS } from '../../model/device';
+import { Device, DEVICE_KEYS, DeviceStatus } from '../../model/device';
 import { DeviceFormComponent } from '../device-form/device-form.component';
 import { CellAction } from '../../model/cellaction';
 import { Pageable } from '../../model/pageable';
@@ -42,7 +42,12 @@ export class BorrowedDevicesComponent implements OnInit {
       this.returnDevice(event.id);
     }
   }
-
+  disableAction(element: any, action: string): boolean {
+    if (element.statusDevice === DeviceStatus.RETURNING) {
+      return true;
+    }
+    return false;
+  }
   returnDevice(id: string) {
     this.openConfirmDialog().subscribe(
       confirmed => {
@@ -132,6 +137,7 @@ export class BorrowedDevicesComponent implements OnInit {
 
   onRefresh() {
     this.loadData();
+    this.messageService.addMessage({ message: 'Data refreshed', status: true });
   }
 
 

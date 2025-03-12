@@ -2,17 +2,18 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../service/user.service';
+import { UserFormComponent } from '../user-form/user-form.component';
 import { MessageService } from '../../service/message.service';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css']
+  selector: 'app-change-userinfor-form',
+  templateUrl: './change-userinfor-form.component.html',
+  styleUrls: ['./change-userinfor-form.component.css']
 })
-export class UserFormComponent implements OnInit {
-  userForm: FormGroup;
-  isEditMode: boolean = false;
+export class ChangeUserinforFormComponent implements OnInit {
+ userForm: FormGroup;
+  isEditMode: boolean = true;
   
 
   constructor(
@@ -30,29 +31,23 @@ export class UserFormComponent implements OnInit {
     this.userForm = this.fb.group({
       username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
       role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
-      password: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]]
+      oldPassword: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]],
+      newPassword: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onSubmit() {
     if (this.userForm.valid) {
       const  result = this.userForm.getRawValue();
+      console.log(result)
       if (this.data) {
-        this.userService.updateUser(this.data.id, result).subscribe(
+        this.userService.changePassword(this.data.id, result).subscribe(
           (data) => {
-            this.messageService.addMessage({message: "Sửa user thành công", status: true});
-            this.dialogRef.close(data); 
+            console.log(data)
+            this.messageService.addMessage({message: "Đổi mật khẩu thành công", status: true});
+            this.dialogRef.close(); 
           }, (error) => {
             console.log(error)
-            this.messageService.addMessage({ message: error.message, status: false });
-          }
-        );
-      } else {
-        this.userService.createUser(result).subscribe(
-          (data) => {
-            this.messageService.addMessage({message: "Tạo user thành công", status: true});
-            this.dialogRef.close(data); 
-          }, (error) => {
             this.messageService.addMessage({ message: error.message, status: false });
           }
         );
@@ -63,5 +58,6 @@ export class UserFormComponent implements OnInit {
   onClose() {
     this.dialogRef.close();
   }
+
 
 }

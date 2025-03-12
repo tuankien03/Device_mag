@@ -1,6 +1,7 @@
 package com.bkav.device_mag_backend.controller;
 
 import Constant.CodeStatus;
+import com.bkav.device_mag_backend.model.DTO.request.ChangePasswordRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
 import com.bkav.device_mag_backend.model.DTO.response.UserDeviceResponseDTO;
@@ -100,6 +101,12 @@ public class UserController {
 
         return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userService.updateUser(id,request));
 
+    }
+
+
+    @PutMapping("password")
+    public ApiResponse<UserResponseDTO> changePasswordUser( @RequestBody ChangePasswordRequestDTO request) {
+        return new ApiResponse<>(CodeStatus.SUCCESS, CodeStatus.SUCCESS_TEXT, userService.changePassword( request));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

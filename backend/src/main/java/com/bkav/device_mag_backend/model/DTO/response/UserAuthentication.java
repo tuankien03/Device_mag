@@ -2,19 +2,18 @@ package com.bkav.device_mag_backend.model.DTO.response;
 
 import com.bkav.device_mag_backend.model.entity.User;
 import com.bkav.device_mag_backend.model.entity.UserRole;
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class UserAuthenticationDTO {
+public class UserAuthentication {
     UUID userID;
     String username;
     String password;
     UserRole role;
 
-    public UserAuthenticationDTO(User user) {
+    public UserAuthentication(User user) {
         this.userID = user.getUserId();
         this.username = user.getUsername();
         this.password = user.getPassword();

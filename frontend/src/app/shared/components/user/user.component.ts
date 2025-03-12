@@ -23,6 +23,7 @@ export class UserComponent {
   displayedColumns: string[] = ['id', 'username', 'role', 'createdAt', 'updatedAt', 'action'];
   dataSource = new MatTableDataSource<User>(this.users);
   pageable: Pageable = { pageNumber: 1, pageSize: 12, property: '', direction: '' };
+  searchText: string = '';
   constructor(private userService: UserService, private messageService: MessageService, private dialog: MatDialog) {
     this.config = [
       {
@@ -103,7 +104,7 @@ export class UserComponent {
   }
 
   loadData(): void {
-    this.userService.getUsers(this.pageable, '').subscribe(
+    this.userService.getUsers(this.pageable, this.searchText).subscribe(
       (data) => {
         this.totalData = data.body.totalElements;
         this.users = [];
@@ -126,6 +127,8 @@ export class UserComponent {
     this.loadData();
   }
   onSearch(value: string) {
+    this.searchText = value;
+    this.pageable.pageNumber = 1;
     this.userService.getUsers(this.pageable, value).subscribe(
       (data) => {
         this.users = [];
@@ -152,6 +155,7 @@ export class UserComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.loadData();
         console.log('User mới:', result);
       }
     });

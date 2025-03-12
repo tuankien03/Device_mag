@@ -4,7 +4,7 @@ import com.bkav.device_mag_backend.Mapper.UserMapper;
 import com.bkav.device_mag_backend.exception.EntityNotFoundException;
 import com.bkav.device_mag_backend.model.DTO.request.SaveUserRequestDTO;
 import com.bkav.device_mag_backend.model.DTO.response.PageResponse;
-import com.bkav.device_mag_backend.model.DTO.response.UserAuthenticationDTO;
+import com.bkav.device_mag_backend.model.DTO.response.UserAuthentication;
 import com.bkav.device_mag_backend.model.DTO.response.UserResponseDTO;
 import com.bkav.device_mag_backend.model.entity.User;
 import com.bkav.device_mag_backend.repository.DAO.interfaces.IUserDAO;
@@ -30,12 +30,12 @@ public class UserDaoImpl implements IUserDAO {
     }
 
     @Override
-    public UserAuthenticationDTO findUserByUsername(String username) {
+    public UserAuthentication findUserByUsername(String username) {
         User user =  userRepository.findByUsername(username).isPresent() ? userRepository.findByUsername(username).get() : null;
        if (user == null) {
            throw new EntityNotFoundException("User not found");
        }
-        return new UserAuthenticationDTO(user);
+        return new UserAuthentication(user);
     }
 
     @Override
