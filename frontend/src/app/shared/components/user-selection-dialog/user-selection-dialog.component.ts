@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../model/user';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-user-selection-dialog',
@@ -15,13 +16,15 @@ export class UserSelectionDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UserSelectionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
     this.searchControl.valueChanges.subscribe(value => {
-      this.filteredUsers = this.data.filter((user: User) => {
-        return user.username.toLowerCase().includes(value.toLowerCase());
+      this.userService.getUsers({ pageNumber: 1, pageSize: 10 }, value).pipe(
+      ).subscribe((response) => {
+        this.filteredUsers = response.body.data;
       }
       );
     });

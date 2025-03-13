@@ -54,7 +54,7 @@ export class AvailableDevicesComponent implements OnInit {
   }
 
   assignDevice(deviceId: string) {
-    this.userService.getUsers({ pageNumber: 1, pageSize: 20, property: '', direction: '' }, '').subscribe(
+    this.userService.getUsers({ pageNumber: 1, pageSize: 5, property: '', direction: '' }, '').subscribe(
       (data) => {
         const dialogRef = this.dialog.open(UserSelectionDialogComponent, {
           width: '400px',

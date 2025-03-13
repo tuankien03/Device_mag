@@ -41,9 +41,9 @@ export class ChangeUserinforFormComponent implements OnInit {
       const  result = this.userForm.getRawValue();
       console.log(result)
       if (this.data) {
-        this.userService.changePassword(this.data.id, result).subscribe(
+        this.userService.changePassword(this.data.id,  {oldPassword: result.oldPassword ,newPassword: result.newPassword}).subscribe(
           (data) => {
-            console.log(data)
+            console.log(result)
             this.messageService.addMessage({message: "Đổi mật khẩu thành công", status: true});
             this.dialogRef.close(); 
           }, (error) => {

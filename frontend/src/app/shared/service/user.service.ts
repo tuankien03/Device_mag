@@ -92,13 +92,13 @@ export class UserService {
     );
   }
 
-  changePassword(id: string, userData: {username: string, oldPassword: string,newPassword: string, role: string }) {
+  changePassword(id: string, userData: {oldPassword: string,newPassword: string}) {
     const token = localStorage.getItem(this.tokenKey) || '';
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/" + id + "/password",userData , {headers}).pipe(
+    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/password",userData , {headers}).pipe(
       tap(
         response => {
           console.log(response);
