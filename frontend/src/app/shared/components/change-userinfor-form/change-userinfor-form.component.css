@@ -1,0 +1,8 @@
+.mat-dialog-content {
+    max-height:none; /* Giới hạn chiều cao */
+    overflow: unset;
+  }
+  .mat-form-field {
+    display: block;
+  }
+  
