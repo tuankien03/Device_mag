@@ -132,7 +132,7 @@ CREATE VIEW public.user_device AS
     d.device_id,
     a.assigned_at,
     a.returned_at,
-    row_number() OVER () AS id
+    a.id
    FROM ((public.assignment a
      JOIN public.users u ON ((a.user_id = u.user_id)))
      JOIN public.device d ON ((a.device_id = d.device_id)));
@@ -175,6 +175,17 @@ ALTER SEQUENCE public.user_session_seq OWNER TO postgres;
 --
 
 COPY public.assignment (assignment_id, user_id, device_id, assigned_at, returned_at, id) FROM stdin;
+4ec57a68-c99c-470c-882e-4652b7964b29	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	bdaab738-dcbb-4cac-bf1c-4a6b6771db52	2025-03-12 13:17:25.898074	2025-03-12 16:45:18.911223	c59971a5-3972-4c80-aa9e-a90ac84ada5c
+390436db-5aa5-42a6-a422-6c6656ceb63a	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	96af6ece-0041-4e3e-84f7-22c08768a95a	2025-03-13 11:24:29.175593	\N	206a0062-63fa-4e0c-ae51-94157a2b8db5
+60117f53-4d37-4b57-978f-67f43dc8b4ee	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	d7153fb4-bd0d-4a5c-9bb9-8bbf6be09571	2025-03-12 15:01:10.423631	2025-03-13 11:25:02.849437	2f164577-29b1-4272-947e-9e7a8945c1a8
+9e90223d-67ae-48c4-bad2-562f1795c785	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	d7153fb4-bd0d-4a5c-9bb9-8bbf6be09571	2025-03-14 15:48:16.384106	\N	936cd057-1cda-47d4-9568-37021abe53f0
+00eb21c9-c2b0-41f7-9455-81b4d0106c66	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	bdaab738-dcbb-4cac-bf1c-4a6b6771db52	2025-03-13 11:22:28.465575	2025-03-14 16:06:53.235749	d8095516-1874-4075-8cff-6c1ac7b45829
+430c1eed-61db-4037-b626-bfd84aacaccf	1bef385a-c09c-4592-9070-0b4b169d0e09	bdaab738-dcbb-4cac-bf1c-4a6b6771db52	2025-03-14 17:34:01.895623	\N	4708d4f0-a065-4e87-898d-ef8d5c52b83d
+6404ce09-1d92-4339-86fb-cb73fdf84ad2	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	bdaab738-dcbb-4cac-bf1c-4a6b6771db52	2025-03-07 15:02:11.002838	2025-03-07 15:32:04.815946	415cf8a6-a386-4f33-b05e-c1f7449eb53a
+90af0b7a-790a-4bb1-9bd5-7ef6f6c98677	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	96af6ece-0041-4e3e-84f7-22c08768a95a	2025-03-07 15:32:26.632011	2025-03-07 15:34:13.462697	125db711-0670-4e6f-ad46-2a06843bbaff
+f711da90-beda-4261-ba9a-71bfacc58a0c	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	96af6ece-0041-4e3e-84f7-22c08768a95a	2025-03-07 15:34:36.21405	2025-03-07 15:34:39.845999	c911ffbb-d0f2-416e-aee4-9c2faed42046
+9bf741d8-8eb8-4e8a-88a5-a7a94e4f6c0e	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	d7153fb4-bd0d-4a5c-9bb9-8bbf6be09571	2025-03-07 15:32:25.614335	2025-03-07 15:38:11.938862	ca64b008-ebbf-4e61-8cb2-c355c10dea9d
+ba948512-309e-4ba9-8bac-3a8cfe3e26b1	b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	bdaab738-dcbb-4cac-bf1c-4a6b6771db52	2025-03-07 15:32:25.21954	2025-03-07 15:38:23.381984	c585d17b-2abb-416f-bbb3-6ba4b03bf84e
 \.
 
 
@@ -183,13 +194,14 @@ COPY public.assignment (assignment_id, user_id, device_id, assigned_at, returned
 --
 
 COPY public.device (device_id, name, description, status, created_at, updated_at) FROM stdin;
-f780c3cd-823b-45e3-a15b-dbd46a5627a5	Router	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	AVAILABLE	2025-02-05 15:17:32.051451	2025-02-05 15:17:32.051471
-d5a6692f-ac2a-43a3-aaff-0c5c8a7fa18a	Router	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	AVAILABLE	2025-02-05 15:17:33.718868	2025-02-05 15:17:33.718885
-2a37562d-56c5-41f1-98e7-7f04159c968e	Router	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	AVAILABLE	2025-02-12 11:20:45.466926	2025-02-12 11:20:45.466958
-6d99a2c0-9aa6-43f3-997a-5761c208a45a	Router	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	AVAILABLE	2025-02-12 11:20:46.138032	2025-02-12 11:20:46.138053
-2c148ba9-9e89-4d71-9868-0af5048f7119	Router	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	AVAILABLE	2025-02-27 09:26:15.232556	2025-02-27 09:26:15.232575
-bdaab738-dcbb-4cac-bf1c-4a6b6771db52	Tao Ro	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	AVAILABLE	2025-02-28 10:01:24.516136	2025-02-28 10:01:24.516173
-7bb2da2f-3d71-4776-87cf-01ae6b5d5912	Router	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	ASSIGNED	2025-02-12 11:20:46.779015	2025-02-28 11:41:50.747095
+7652d771-20a0-4f01-b745-e5bf0a421067	qweqwe	qweqweqw	AVAILABLE	2025-03-14 15:48:05.187074	2025-03-14 15:48:05.187115
+d7153fb4-bd0d-4a5c-9bb9-8bbf6be09571	Tao Ro	asdasdád	RETURNING	2025-03-06 11:46:53.131558	2025-03-14 15:48:34.977701
+bdaab738-dcbb-4cac-bf1c-4a6b6771db52	Tao Ro	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qu	ASSIGNED	2025-02-28 10:01:24.516136	2025-03-14 17:34:01.891373
+511ae30d-ab30-40cb-a948-62eefd0bb1c1	asdfaefade	asdfasdfasdf	AVAILABLE	2025-03-12 14:07:25.975597	2025-03-12 14:07:25.975606
+3efeca4b-0a58-45ff-bbe6-c72c69d93ab0	adf	asdf	AVAILABLE	2025-03-12 14:08:01.1759	2025-03-12 14:08:01.175907
+396663c1-0eca-4851-ba1f-1462c96cca40	asdfasdf	asdfasdf	AVAILABLE	2025-03-12 14:08:22.350151	2025-03-12 14:08:22.350173
+b7e35b95-716e-45d9-ab57-dc6e69358983	asdfasdfasdfasdfaa	ádfasdfasdf	AVAILABLE	2025-03-13 11:17:34.545878	2025-03-13 11:17:34.545897
+96af6ece-0041-4e3e-84f7-22c08768a95a	Tao Ro	Router Wi-Fi (hay còn gọi là bộ định tuyến không dây) là một thiết bị mạng dùng để phân phối kết nối Internet cho nhiều thiết bị khác nhau như điện thoại, máy tính, máy tính bảng, tivi thông minh,... thông qua	RETURNING	2025-03-06 11:46:57.698221	2025-03-13 11:24:47.183426
 \.
 
 
@@ -206,17 +218,10 @@ COPY public.user_session (session_id, user_id, token, created_at, expires_at, re
 --
 
 COPY public.users (user_id, created_at, password, role, updated_at, username) FROM stdin;
-fa1c094a-4048-44a7-a43b-053755dcaa6b	2025-03-04 17:24:25.793363	$2a$06$0mfnUdVQLpRSgLkHIspAYOGAMhOxcTYA9b7nu6/bscdNFQK7vUPhi	USER	2025-03-04 17:24:25.793369	Cecilia7671
-5abf0874-2021-4512-a185-9635c9848019	2025-03-04 17:24:25.803699	$2a$06$Yyom1Qmsr0r7WcPtoQ0Cnegzt6P97R3ueS8mTs22xFTM/3vmnjWse	USER	2025-03-04 17:24:25.803706	Henrietta7204
-ba8b64a7-84fd-4f74-80a8-9af5cc50b24f	2025-03-04 17:24:25.815188	$2a$06$oAnu3y7v6Zx9FjiEPA1..e9tylgkJYMJ2/n9.gdxc.x5V5lS0CYBe	USER	2025-03-04 17:24:25.815195	Mathilda9171
-07f9149a-cc29-4e48-996d-33442b6d24bd	2025-03-04 17:24:25.826668	$2a$06$FEhT5vxYZ8u9DgIzBldYiuHAgAc2IhE9.USck6irvhc6fBJ6bVlzW	USER	2025-03-04 17:24:25.826678	Bobby6453
-9c5bf995-1398-44c4-8d87-d89703cc5006	2025-03-04 17:24:25.840012	$2a$06$QjsZvJHzJfkpthoxfHDHv.FBfged9x7k3vdyAdfQFD2FsR3M5Ew8q	USER	2025-03-04 17:24:25.84002	Ralph5312
-ed64c123-4738-481f-b143-5dfad59c99a2	2025-03-04 17:24:25.851547	$2a$06$Cr/2jokC6istpB9WaKlDS.Xm2HjzGUcY7vigT/TJ9flpbRHWDLx0a	USER	2025-03-04 17:24:25.851553	Gordon7161
-b6c567a1-f1a4-425b-9347-92f952da6a4f	2025-03-04 17:24:25.862983	$2a$06$.9LU9nm.4LfMdQ/FxxxI9.YySVXBWUUi6/AJq1GNQRIU4iuU3vt.i	USER	2025-03-04 17:24:25.862991	Theresa5004
-1bef385a-c09c-4592-9070-0b4b169d0e09	2025-03-04 17:24:25.875719	$2a$06$oLt2BlgQc0rpCXowDIrqgeb.DaTc7/1Gj0hLS/I9lcbMjx91hOFle	USER	2025-03-04 17:24:25.875727	Dylan6935
 3321588f-5575-4632-b07a-3529bb72fdf9	2025-03-04 17:24:25.886999	$2a$06$oKVWiXccB4RW.vGOleOa5uIkyney/a1cw5jxXDCqWaOXORCTJ6oei	USER	2025-03-04 17:24:25.887006	Dora1427
 bfc2c887-3f1a-4e70-bc72-78ad65bc9c95	2025-03-04 17:24:25.897789	$2a$06$ucXt8f0r481BVmuGv0Mpn.MuJezyh7UuS.LnkxweJJVB/4SrieSh.	USER	2025-03-04 17:24:25.897797	Paul1692
 b8cfb1ef-96dc-4403-b897-cb8b1d7a1af8	2025-03-04 17:24:25.908876	$2a$06$YfASjsWkLQCM0xZm3qmjseAKZt640.IEmxhLyCJy1pRo.wkNi0XIy	USER	2025-03-04 17:24:25.908885	Nora5663
+1bef385a-c09c-4592-9070-0b4b169d0e09	2025-03-04 17:24:25.875719	$2a$06$RViA2/BDOUiEG5mwxdtx2epioRfgDR90b67URTM7sPSuJrURNigeK	USER	2025-03-12 15:38:24.953589	Dylan6935
 20683c86-85e2-43a9-8bb6-00c88750cbc3	2025-03-04 17:24:26.284726	$2a$06$ckcYBb/1vvnshfqUW2sZeu3N531/X3SeqImlL/UChSKSc21AdMp56	USER	2025-03-04 17:24:26.284733	Sadie8781
 3589fa12-1b34-4c47-a9ad-aa4cf4ec7ad2	2025-03-04 17:24:26.294829	$2a$06$.QxMLb4wIuO5dXGh5RTSH.zA/Ev7rebwWcRb.pTO3sAMMhgyThDCu	USER	2025-03-04 17:24:26.294836	Phillip9722
 3d29443c-f367-402e-840d-c10cdace419a	2025-03-04 17:24:26.305463	$2a$06$b2.gU2H2LfbGf3ic6JFzzuRtFMdrwifrgSYxh4MC5UOOaFoEqS7r2	USER	2025-03-04 17:24:26.305469	Esther4936
@@ -1126,7 +1131,25 @@ b5d8dce3-d614-496e-a47b-1c0c1eaa9293	2025-03-04 17:24:36.185069	$2a$06$ZkIQXawWl
 a6c33f67-95e1-42b2-931a-c1da99d4f691	2025-03-04 17:24:36.21626	$2a$06$XGoluQjI2gvsh1bjtBgat.aiTZcJ/ieC5gQQRpwk3feGFYtKxHK7S	USER	2025-03-04 17:24:36.216263	Jimmy9919
 1aaab6b0-96b0-4170-961f-88e87e7fd539	2025-03-04 17:24:36.234181	$2a$06$.CdB5dBGCvhNKKFqRpA14.A5Gz.Bwx3laZVDOho3nf4K2m6HGQi/m	USER	2025-03-04 17:24:36.234184	Phillip7826
 36773160-11af-4384-a1db-14cda4beb175	2025-03-04 17:24:36.242893	$2a$06$y4jj4UJXuaSW8BBQIPft1ORykDsaj5LjiBt1b5QxjyWkbj3/Gi.3q	USER	2025-03-04 17:24:36.242896	Jeremiah6455
-d89e901b-b553-43b1-b369-c029183b5ae9	2025-03-04 18:08:00.718918	$2a$06$bRJrEv2aFMxhDLqQX8VZC.ZuVSuVYeoQvQlIfdhwsHbVS25IqLNs6	ADMIN	2025-03-04 18:08:00.718941	adminKien
+a5308e54-8fb5-430a-82bd-f4cd71826ad7	2025-03-05 18:15:22.311254	$2a$06$pMgum6mB1qlJ89QtcRs7JuHV8uwDm6WKY1oYFoIIrE1TVV4ki8qGm	USER	2025-03-05 18:15:22.311265	userKien2131
+dfacc6f7-6165-4462-ad0f-1a3a40b94821	2025-03-05 17:27:04.588532	$2a$06$G9hCqQTN6/FKlDqM1T1ZRe5DCakESfK/jjaueCU9nvFv9oJA.gM/e	USER	2025-03-12 13:18:37.889949	userKien1
+b2a4c0ff-65ec-4d92-8f9c-e41608c16f58	2025-03-05 11:02:33.113773	$2a$06$MyV2yBY24PwBq9ClLcWQwO7bX6DKrX4CiLRMlIJUCfq1kg8XvieHa	USER	2025-03-12 15:56:29.471753	userKien
+1f1d05e6-1fd7-430e-8188-6ad1ad41a828	2025-03-06 09:13:27.790123	$2a$06$J44efiNn8vJam5uKVf0deu.DSsVFttD.GBZPcg.euTkpCPHPjX0/e	USER	2025-03-06 09:13:27.790142	KienBling
+be589b28-0d9f-4ce6-a36f-2160ddd38654	2025-03-05 17:43:31.571005	Kadwqwe1@	USER	2025-03-05 17:53:16.061134	userKien21
+f3bd3499-b369-408c-82a3-66d05a1fe929	2025-03-05 17:53:42.08649	$2a$06$xe7ATVdtG2AR8g5j1PrIc.T24or18xU/PV8FdzSR0uutu5Nygjz16	USER	2025-03-05 17:53:42.086508	userKien213
+e5b81da7-81d0-4af8-83ff-178841135db1	2025-03-06 10:48:00.783983	$2a$06$JcMDZgrMszHewZFeiWHwNO.eXg4s4ulISutNpMwS0HBZw.rznGUiC	USER	2025-03-06 10:48:00.784016	Kien12312
+92bf4812-42c1-40ac-bbc8-df0e603ff5c7	2025-03-06 10:48:21.95562	$2a$06$nMd.IA1H6MtAubKCxJOPx.aiAbVTsN2Mi2wIiO9Zecaw97/SruPDy	USER	2025-03-06 10:48:21.955629	aKien123
+5dba00c1-a56d-4a6f-a77c-6beb5f1785e6	2025-03-12 09:31:28.624723	$2a$06$4PaMfgIMNkUI4HcBUxxW/ehhMmvo9mUX3lbcln2AJ1haiU/emsVNW	USER	2025-03-12 09:31:28.624732	userKien123123
+c4d57d32-aef9-4e90-bee2-ec13e666cb4d	2025-03-12 16:46:16.492156	$2a$06$jyebm0903FaGC54oU/1Tf.04LABTflti.QJMysmP/Mnlt4yx.TsVa	USER	2025-03-12 16:46:16.492172	userKien1123
+375474a3-97cb-45fe-8f55-18d6f08d835c	2025-03-12 16:48:14.571922	$2a$06$C0mu5.zVj76cRsX7aCoweehdXxHn0s/gNqTKELWbHlHySFWblwpaK	USER	2025-03-12 16:48:14.571933	userKien1231
+77afbcf8-3afe-4c65-a32a-e93ba8121e1c	2025-03-12 16:51:35.515161	$2a$06$6ekBOx5kslhRQSzKZPK/C.V7V6GW1YvQ0EVgv5n/7GisL95PUml1S	USER	2025-03-12 16:51:35.515183	userKein1
+f7da856c-02e9-4796-a2be-0c89ea30b5c0	2025-03-12 16:53:15.306229	$2a$06$NFc7nvviVefMohB4ge34oOfWINr/a/Q5Hx1kJNEEa3VU53CErSmUq	USER	2025-03-12 16:53:15.306239	userKien21123
+5395b7e4-5538-45fd-9351-f995a47cb480	2025-03-12 16:53:59.858549	$2a$06$crPW5a5OdOyszLakQRFPYOLi418wm7ZX9XyDCL.v6eUmGXOwPKxeq	USER	2025-03-12 16:53:59.858558	userKien123
+1f4cca03-5b11-42ef-86f4-7d2d88fd0fa7	2025-03-12 16:54:24.430249	$2a$06$1/ahdTHLlGN9T7vxE/yokOXveEkesjuKRzXmIVE5bwIQzBRK0jt4a	USER	2025-03-12 16:54:24.430264	userKien12
+d71e423b-5197-4ff4-bd89-43f84213e856	2025-03-12 16:55:00.850923	$2a$06$2WydioCevTizDHjdcFyJR.NMgNbnkqx4Vl9j.97ITobqmKY8K3y0O	USER	2025-03-12 16:55:00.850932	userKien321
+c22653f6-6bdb-44fd-bb9a-8026fd729ca3	2025-03-12 16:55:54.604225	$2a$06$NgZBlNqSIKY/1mx1WPneleJ3Aev90RqJC0QlRqqgFOqzRXabQIr/q	USER	2025-03-12 16:55:54.604231	userKien323
+d89e901b-b553-43b1-b369-c029183b5ae9	2025-03-04 18:08:00.718918	$2a$06$M1PwXTUnQcbjIq3QT2b8guI6surZ6KDsMRxcYhLjef9w6coRMgmZ2	ADMIN	2025-03-14 16:42:44.271144	adminKien
+7db0a46f-8309-4fea-8765-13530bc1ab5e	2025-03-14 16:45:13.719453	$2a$06$Bkg.OJW5.2FJczYYuO5D7O40sXqScNT1kFYybHPbV1o7Qd/y6vgEq	USER	2025-03-14 16:45:13.719457	kiensere
 \.
 
 
