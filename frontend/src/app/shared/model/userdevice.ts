@@ -16,7 +16,6 @@ export const USERDEVICE_KEYS = [
     'descriptionDevice',
     'statusDevice',
     'username',
-    'role',
     'assignedAt',
     'returnedAt'
 ];

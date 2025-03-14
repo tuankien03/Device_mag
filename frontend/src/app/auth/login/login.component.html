@@ -5,13 +5,13 @@
             <mat-form-field floatLabel="auto">
                 <input matInput placeholder="Username" formControlName="username" type="text" required>
                 <mat-error >
-                    Please enter a valid username
+                    Vui lòng điền username
                 </mat-error>
             </mat-form-field>
             <mat-form-field floatLabel="auto">
                 <input matInput placeholder="Password" formControlName="password" type="password" required>
                 <mat-error >
-                    Password is required
+                    Vui lòng điền password
                 </mat-error>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>

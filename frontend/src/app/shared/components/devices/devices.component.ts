@@ -59,7 +59,8 @@ export class DevicesComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            console.log(result)
+            console.log(result);
+            this.loadData();
           }
         });
       }
@@ -153,6 +154,7 @@ export class DevicesComponent implements OnInit {
   }
 
   onAdd() {
+
     const dialogRef = this.dialog.open(DeviceFormComponent, {
       width: '400px',
       data: null

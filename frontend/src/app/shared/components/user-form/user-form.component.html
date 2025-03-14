@@ -19,7 +19,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Mật khẩu</mat-label>
       <input matInput type="password" formControlName="password" placeholder="Nhập mật khẩu">
-      <mat-error *ngIf="userForm.get('password')?.invalid">Mật khẩu phải ít nhất 6 ký tự</mat-error>
+      <mat-error>Mật khẩu phải ít nhất 6 ký tự</mat-error>
     </mat-form-field>
 
     <mat-dialog-actions align="end">

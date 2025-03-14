@@ -31,8 +31,8 @@ export class ChangeUserinforFormComponent implements OnInit {
     this.userForm = this.fb.group({
       username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
       role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
-      oldPassword: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]],
-      newPassword: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]]
+      oldPassword: ['', [Validators.required, Validators.minLength(6)]],
+      newPassword: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 

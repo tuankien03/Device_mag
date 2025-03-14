@@ -30,7 +30,7 @@ export class UserFormComponent implements OnInit {
     this.userForm = this.fb.group({
       username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
       role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
-      password: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 

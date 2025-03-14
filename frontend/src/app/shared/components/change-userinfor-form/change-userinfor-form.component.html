@@ -19,14 +19,16 @@
     <mat-form-field appearance="outline">
       <mat-label>Mật khẩu cũ</mat-label>
       <input matInput type="password" formControlName="oldPassword" placeholder="Nhập mật khẩu cũ">
-      <mat-error *ngIf="userForm.get('oldPassword')?.invalid">Mật khẩu phải ít nhất 6 ký tự</mat-error>
-    </mat-form-field>
+      <mat-error >
+        Mật khẩu phải ít nhất 6 ký tự
+      </mat-error>    </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Mật khẩu mới</mat-label>
       <input matInput type="password" formControlName="newPassword" placeholder="Nhập mật khẩu mới">
-      <mat-error *ngIf="userForm.get('newPassword')?.invalid">Mật khẩu phải ít nhất 6 ký tự</mat-error>
-    </mat-form-field>
+      <mat-error>
+        Mật khẩu phải ít nhất 6 ký tự
+      </mat-error>    </mat-form-field>
 
     <mat-dialog-actions align="end">
       <button mat-button (click)="onClose()">Hủy</button>

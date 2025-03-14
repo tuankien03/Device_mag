@@ -20,7 +20,7 @@ export class UserComponent {
   totalData: number;
   users: User[] = [];
   config: Array<CellAction>;
-  displayedColumns: string[] = ['id', 'username', 'role', 'createdAt', 'updatedAt', 'action'];
+  displayedColumns: string[] = ['username', 'role', 'createdAt', 'updatedAt', 'action'];
   dataSource = new MatTableDataSource<User>(this.users);
   pageable: Pageable = { pageNumber: 1, pageSize: 12, property: '', direction: '' };
   searchText: string = '';
