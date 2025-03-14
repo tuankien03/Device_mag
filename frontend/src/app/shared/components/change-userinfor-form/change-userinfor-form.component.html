@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Xem thông tin</h2>
 <mat-dialog-content>
-  <form [formGroup]="userForm" >
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Tên đăng nhập</mat-label>
       <input matInput formControlName="username" placeholder="Nhập tên đăng nhập">
@@ -28,11 +28,20 @@
       <input matInput type="password" formControlName="newPassword" placeholder="Nhập mật khẩu mới">
       <mat-error>
         Mật khẩu phải ít nhất 6 ký tự
-      </mat-error>    </mat-form-field>
+      </mat-error>    
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Xác nhận mật khẩu</mat-label>
+      <input matInput type="password" formControlName="confirmPassword" placeholder="Nhập lại mật khẩu mới">
+      <mat-error >
+        {{ getConfirmPasswordError() }}
+      </mat-error>
+    </mat-form-field>
+    
 
     <mat-dialog-actions align="end">
       <button mat-button (click)="onClose()">Hủy</button>
-      <button mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="onSubmit()">
+      <button mat-raised-button color="primary" [disabled]="userForm.invalid" >
         Đổi mật khẩu
       </button>
     </mat-dialog-actions>

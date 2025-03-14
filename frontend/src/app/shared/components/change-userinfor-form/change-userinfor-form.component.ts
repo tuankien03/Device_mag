@@ -32,8 +32,36 @@ export class ChangeUserinforFormComponent implements OnInit {
       username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
       role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
       oldPassword: ['', [Validators.required, Validators.minLength(6)]],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['',  [Validators.required, Validators.minLength(6)]]
+    },  { validators: this.passwordMatchValidator });
+  }
+  passwordMatchValidator(form: FormGroup) {
+    const newPassword = form.get('newPassword');
+    const confirmPassword = form.get('confirmPassword');
+  
+    if (confirmPassword?.errors && !confirmPassword.errors['passwordMismatch']) {
+      return; // Nếu đã có lỗi khác (VD: required, minlength) thì không kiểm tra tiếp
+    }
+  
+    if (newPassword?.value !== confirmPassword?.value) {
+      confirmPassword?.setErrors({ passwordMismatch: true });
+    } else {
+      confirmPassword?.setErrors(null);
+    }
+  }
+
+  getConfirmPasswordError() {
+    if (this.userForm.get('confirmPassword')?.hasError('required')) {
+      return "Vui lòng nhập xác nhận mật khẩu";
+    }
+    if (this.userForm.get('confirmPassword')?.hasError('minlength')) {
+      return "Mật khẩu phải có ít nhất 6 ký tự";
+    }
+    if (this.userForm.get('confirmPassword')?.hasError('passwordMismatch')) {
+      return "Mật khẩu xác nhận không khớp";
+    }
+    return "";
   }
 
   onSubmit() {
