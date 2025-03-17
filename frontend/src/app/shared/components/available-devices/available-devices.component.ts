@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pageable } from '../../model/pageable';
-import { Device, DEVICE_KEYS } from '../../model/device';
+import { Device, DEVICE_DISPLAYED_COLUMNS, DEVICE_KEYS } from '../../model/device';
 import { MatTableDataSource } from '@angular/material/table';
 import { DeviceFormComponent } from '../device-form/device-form.component';
 import { DeviceService } from '../../service/device.service';
@@ -24,6 +24,7 @@ export class AvailableDevicesComponent implements OnInit {
   devices: Device[] = [];
   config: Array<CellAction>;
   displayedColumns: string[] = [...DEVICE_KEYS, 'action'];
+  displayedColumnsHeader: { [key: string]: string } = DEVICE_DISPLAYED_COLUMNS;
   dataSource = new MatTableDataSource<Device>(this.devices);
   pageable: Pageable = { pageNumber: 1, pageSize: 12, property: '', direction: '' };
   constructor(private deviceService: DeviceService, private messageService: MessageService, private dialog: MatDialog,private userService: UserService) {

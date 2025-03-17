@@ -13,7 +13,7 @@ import { Pageable } from '../../model/pageable';
 })
 export class TableComponent implements AfterViewInit, OnChanges {
   @Input() pageable: Pageable = {pageNumber: 1, pageSize: 20 , property: '', direction: ''};
-
+  @Input() displayedColumnsHeader: {[key: string]: string} = {};
   @Input() totalItems: number = 0;
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: MatTableDataSource<any>;
@@ -48,8 +48,15 @@ export class TableComponent implements AfterViewInit, OnChanges {
   }
 
   onSearch(event: any) {
-    this.paginator.firstPage(); 
-    this.search.emit(event.target.value);
+    const value = event.target.value.trim(); // Loại bỏ khoảng trắng đầu/cuối
+  
+    if (value.length === 0) {
+      console.log("Search value is empty, ignoring...");
+      return; // Không gửi event nếu giá trị rỗng
+    }
+  
+    this.paginator.firstPage();
+    this.search.emit(value);
   }
 
   onAdd() {

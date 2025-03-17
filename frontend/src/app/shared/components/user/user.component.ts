@@ -21,6 +21,13 @@ export class UserComponent {
   users: User[] = [];
   config: Array<CellAction>;
   displayedColumns: string[] = ['username', 'role', 'createdAt', 'updatedAt', 'action'];
+  displayedColumnsHeader: { [key: string]: string } = {
+    "username": "Tên người dùng",
+    "role": "Vai trò",
+    "createdAt": "Ngày tạo",
+    "updatedAt": "Ngày cập nhật",
+    "action": "Hành động"
+  };
   dataSource = new MatTableDataSource<User>(this.users);
   pageable: Pageable = { pageNumber: 1, pageSize: 12, property: '', direction: '' };
   searchText: string = '';

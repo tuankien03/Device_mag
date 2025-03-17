@@ -32,7 +32,6 @@ import { MatListModule } from '@angular/material/list';
 import { NotfoudPageComponent } from './components/notfoud-page/notfoud-page.component';
 import { RedirectComponent } from './components/redirect/redirect.component';
 import { ReturningDeviceComponent } from './components/returning-device/returning-device.component';
-import { AssignmentFormComponent } from './components/assignment-form/assignment-form.component';
 import { UserSelectionDialogComponent } from './components/user-selection-dialog/user-selection-dialog.component';
 import { AssignedDevicesComponent } from './components/assigned-devices/assigned-devices.component';
 import { ChangeUserinforFormComponent } from './components/change-userinfor-form/change-userinfor-form.component';
@@ -43,7 +42,7 @@ import { ChangeUserinforFormComponent } from './components/change-userinfor-form
 
 
 @NgModule({
-  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent  , BorrowedDevicesComponent, AvailableDevicesComponent, ConfirmDialogComponent, NotfoudPageComponent, RedirectComponent, ReturningDeviceComponent, AssignmentFormComponent, UserSelectionDialogComponent, AssignedDevicesComponent, ChangeUserinforFormComponent],
+  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent  , BorrowedDevicesComponent, AvailableDevicesComponent, ConfirmDialogComponent, NotfoudPageComponent, RedirectComponent, ReturningDeviceComponent, UserSelectionDialogComponent, AssignedDevicesComponent, ChangeUserinforFormComponent],
   imports: [
     CommonModule,MatInputModule,
     MatCardModule,

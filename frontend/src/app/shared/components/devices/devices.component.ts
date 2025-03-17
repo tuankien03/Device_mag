@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Device, DEVICE_KEYS } from '../../model/device';
+import { Device, DEVICE_DISPLAYED_COLUMNS, DEVICE_KEYS } from '../../model/device';
 import { CellAction } from '../../model/cellaction';
 import { MatTableDataSource } from '@angular/material/table';
 import { Pageable } from '../../model/pageable';
@@ -20,6 +20,7 @@ export class DevicesComponent implements OnInit {
   devices: Device[] = [];
   config: Array<CellAction>;
   displayedColumns: string[] = [...DEVICE_KEYS, 'action'];
+  displayedColumnsHeader: { [key: string]: string } = DEVICE_DISPLAYED_COLUMNS;
   dataSource = new MatTableDataSource<Device>(this.devices);
   pageable: Pageable = { pageNumber: 1, pageSize: 12, property: '', direction: '' };
   constructor(private deviceService: DeviceService, private messageService: MessageService, private dialog: MatDialog) {

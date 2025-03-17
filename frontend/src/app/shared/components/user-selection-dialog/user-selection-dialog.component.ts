@@ -20,9 +20,11 @@ export class UserSelectionDialogComponent implements OnInit {
     private userService: UserService
   ) {}
 
+
+
   ngOnInit() {
     this.searchControl.valueChanges.subscribe(value => {
-      this.userService.getUsers({ pageNumber: 1, pageSize: 10 }, value).pipe(
+      this.userService.getUsers({ pageNumber: 1, pageSize: 10 }, value.trim()).pipe(
       ).subscribe((response) => {
         this.filteredUsers = response.body.data;
       }

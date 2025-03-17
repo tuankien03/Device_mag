@@ -19,3 +19,21 @@ export const USERDEVICE_KEYS = [
     'assignedAt',
     'returnedAt'
 ];
+
+export const USERDEVICE_DISPLAYED_COLUMNS = {
+    deviceName: 'Tên thiết bị',
+    descriptionDevice: 'Mô tả',
+    statusDevice: 'Trạng thái',
+    username: 'Người dùng',
+    assignedAt: 'Ngày mượn',
+    returnedAt: 'Ngày trả lại'
+};
+
+export const USERDEVICE_DISPLAYED_COLUMNS_HEADER = {
+    deviceName: 'Tên thiết bị',
+    descriptionDevice: 'Mô tả',
+    statusDevice: 'Trạng thái',
+    username: 'Người dùng',
+    assignedAt: 'Ngày mượn',
+    returnedAt: 'Ngày trả lại'
+};

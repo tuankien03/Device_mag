@@ -21,3 +21,11 @@ export enum DeviceStatus {
     ASSIGNED = "ASSIGNED"
 }
 
+export const DEVICE_DISPLAYED_COLUMNS = {
+    name: 'Tên thiết bị',
+    description: 'Mô tả',
+    status: 'Trạng thái',
+    createdAt: 'Ngày tạo',
+    updatedAt: 'Ngày cập nhật'
+};
+

@@ -73,6 +73,7 @@ export class ChangeUserinforFormComponent implements OnInit {
           (data) => {
             console.log(result)
             this.messageService.addMessage({message: "Đổi mật khẩu thành công", status: true});
+            this.authService.logout();
             this.dialogRef.close(); 
           }, (error) => {
             console.log(error)

@@ -21,7 +21,7 @@
     <div class="table-content">
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container *ngFor="let column of displayedColumnsWithoutLast" [matColumnDef]="column">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="fixed-header"> {{ column | titlecase }} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="fixed-header"> {{ displayedColumnsHeader[column] }} </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="column === 'description' || column === 'descriptionDevice'" [matTooltip]="element[column]"
               matTooltipPosition="above">
@@ -43,7 +43,7 @@
             </span>
           </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns "></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>

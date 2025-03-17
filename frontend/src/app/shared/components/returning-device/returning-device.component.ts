@@ -3,7 +3,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { Observable } from 'rxjs';
 import { Pageable } from '../../model/pageable';
 import { MatTableDataSource } from '@angular/material/table';
-import { UserDevice, USERDEVICE_KEYS } from '../../model/userdevice';
+import { UserDevice, USERDEVICE_DISPLAYED_COLUMNS_HEADER, USERDEVICE_KEYS } from '../../model/userdevice';
 import { CellAction } from '../../model/cellaction';
 import { MessageService } from '../../service/message.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,6 +23,7 @@ export class ReturningDeviceComponent implements OnInit {
     userDevices: UserDevice[] = [];
     config: Array<CellAction>;
     displayedColumns: string[] = [...USERDEVICE_KEYS, 'action'];
+    displayedColumnsHeader: { [key: string]: string } = USERDEVICE_DISPLAYED_COLUMNS_HEADER;
     dataSource = new MatTableDataSource<UserDevice>(this.userDevices);
     pageable: Pageable = { pageNumber: 1, pageSize: 12, property: '', direction: '' };
     constructor(private userService: UserService, private messageService: MessageService, private dialog: MatDialog) {
