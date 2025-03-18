@@ -7,6 +7,7 @@ import { ResponseApi } from '../model/responseapi';
 import { PageResponse } from '../model/pageresponse';
 import { Device } from '../model/device';
 import { catchError, tap } from 'rxjs/operators';
+import { getHeaders } from '../model/headers';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,7 @@ export class DeviceService {
       params = params.set('searchText', searchText);
     }
     this.messageService.addMessage({ message: 'Lấy danh sách thiết bị', status: true });
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device', { headers, params }).pipe();
+    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device', { headers: getHeaders(), params }).pipe();
   }
 
   getAvailableDevices(pageable: Pageable, searchText: string): Observable<ResponseApi<PageResponse<Device[]>>> {
@@ -49,21 +45,11 @@ export class DeviceService {
       params = params.set('searchText', searchText);
     }
     this.messageService.addMessage({ message: 'Lấy danh sách thiết bị', status: true });
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device/available', { headers, params }).pipe();
+    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device/available', { headers: getHeaders(), params }).pipe();
   }
 
   getDeviceById(id: string) {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device/' + id, { headers }).pipe(
+    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'device/' + id, { headers: getHeaders() }).pipe(
       tap(response => {
         console.log(response)
       }
@@ -75,12 +61,7 @@ export class DeviceService {
   }
 
   createDevice(deviceData: { name: string, status: string, description: string }) {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<ResponseApi<Device>>(this.apiUrl + 'device', deviceData, { headers }).pipe(
+    return this.http.post<ResponseApi<Device>>(this.apiUrl + 'device', deviceData, { headers: getHeaders() }).pipe(
       tap(
         response => {
           console.log(response);
@@ -92,12 +73,7 @@ export class DeviceService {
   }
 
   updateDevice(id: string, deviceData: { name: string, status: string, description: string }) {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.put<ResponseApi<Device>>(this.apiUrl + "device/" + id, deviceData, { headers }).pipe(
+    return this.http.put<ResponseApi<Device>>(this.apiUrl + "device/" + id, deviceData, { headers: getHeaders() }).pipe(
       tap(
         response => {
           console.log(response);
@@ -109,12 +85,7 @@ export class DeviceService {
   }
 
   deleteDevice(id: string) {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.delete<ResponseApi<string>>(this.apiUrl + "device/" + id, { headers }).pipe(
+    return this.http.delete<ResponseApi<string>>(this.apiUrl + "device/" + id, { headers: getHeaders() }).pipe(
       tap(
         response => {
           console.log(response);
@@ -124,6 +95,4 @@ export class DeviceService {
       })
     )
   }
-
-
 }

@@ -7,17 +7,15 @@ import { PageResponse } from '../model/pageresponse';
 import { UserDevice } from '../model/userdevice';
 import { Observable } from 'rxjs';
 import { Pageable } from '../model/pageable';
+import { getHeaders } from '../model/headers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentService {
 
-  private apiUrl = 'http://localhost:8080/api/';
-    private tokenKey = 'authToken';
-  
+  private apiUrl = 'http://localhost:8080/api/';  
     constructor(private http: HttpClient, private messageService: MessageService) { }
-
     getAllCurrentAssignedDevice(pageable: Pageable):  Observable<ResponseApi<PageResponse<UserDevice[]>>> {
        let params = new HttpParams().set('page', pageable.pageNumber.toString()).set('size', pageable.pageSize.toString());
           if (pageable.property) {
@@ -26,13 +24,7 @@ export class AssignmentService {
           if (pageable.direction) {
             params = params.set('direction', pageable.direction);
           }
-          const token = localStorage.getItem(this.tokenKey) || '';
-          const headers = new HttpHeaders({
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          });
-      
-          return this.http.get<ResponseApi<PageResponse<UserDevice[]>>>(this.apiUrl + 'user-device/assigned-device', { headers, params }).pipe(
+          return this.http.get<ResponseApi<PageResponse<UserDevice[]>>>(this.apiUrl + 'user-device/assigned-device', { headers: getHeaders(), params }).pipe(
             tap(response => {
               console.log(response);
             }),
@@ -43,12 +35,7 @@ export class AssignmentService {
     }
 
     deleteAssignment(id: string) {
-        const token = localStorage.getItem(this.tokenKey) || '';
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        });
-        return this.http.delete<ResponseApi<string>>(this.apiUrl + "assignment/" + id, { headers }).pipe(
+        return this.http.delete<ResponseApi<string>>(this.apiUrl + "assignment/" + id, { headers: getHeaders() }).pipe(
           tap(
             response => {
               console.log(response);

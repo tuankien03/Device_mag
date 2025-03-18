@@ -46,15 +46,11 @@ button {
     margin: 0 5px;
 }
 
-.add-btn {
-    color: white;
-    background-color: var(--primary);
-}
 
 
 .table-content {
     height: calc(100% - 56px);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 

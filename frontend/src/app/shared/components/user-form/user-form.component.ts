@@ -28,9 +28,9 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     this.isEditMode = !!this.data;
     this.userForm = this.fb.group({
-      username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
+      username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{8,16}$')],
       role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]]
     });
   }
 

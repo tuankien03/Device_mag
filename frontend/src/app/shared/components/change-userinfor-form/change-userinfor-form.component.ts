@@ -32,7 +32,7 @@ export class ChangeUserinforFormComponent implements OnInit {
       username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required],
       role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
       oldPassword: ['', [Validators.required, Validators.minLength(6)]],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      newPassword: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
       confirmPassword: ['',  [Validators.required, Validators.minLength(6)]]
     },  { validators: this.passwordMatchValidator });
   }

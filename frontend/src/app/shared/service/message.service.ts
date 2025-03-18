@@ -5,7 +5,7 @@ import { Message } from '../model/message';
   providedIn: 'root'
 })
 export class MessageService {
-  messages: Message[] = []; // ✅ Khai báo mảng message
+  messages: Message[] = []; // 
 s
   addMessage(message: Message): void {
     this.messages.push(message);

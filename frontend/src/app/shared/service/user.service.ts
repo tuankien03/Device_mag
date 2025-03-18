@@ -12,13 +12,13 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { throwError } from 'rxjs';
 import { Assignment } from '../model/assignment';
 import { UserDevice } from '../model/userdevice';
+import { getHeaders } from '../model/headers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiUrl = 'http://localhost:8080/api/';
-  private tokenKey = 'authToken';
   private currentUserId = this.authService.getUserId(); 
 
   constructor(private http: HttpClient, private messageService: MessageService,private authService: AuthService) { }
@@ -35,12 +35,7 @@ export class UserService {
       params = params.set('searchText', searchText);
     }
     this.messageService.addMessage({ message: 'Lấy danh sách người dùng', status: true });
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get<ResponseApi<PageResponse<User[]>>>(this.apiUrl + 'user', { headers, params }).pipe();
+    return this.http.get<ResponseApi<PageResponse<User[]>>>(this.apiUrl + 'user', {headers: getHeaders(), params }).pipe();
   }
   
   getReturningDevices(pageable: Pageable): Observable<ResponseApi<PageResponse<UserDevice[]>>> {
@@ -51,13 +46,7 @@ export class UserService {
     if (pageable.direction) {
       params = params.set('direction', pageable.direction);
     }
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    return this.http.get<ResponseApi<PageResponse<UserDevice[]>>>(this.apiUrl + 'user-device/returning-device', { headers, params }).pipe(
+    return this.http.get<ResponseApi<PageResponse<UserDevice[]>>>(this.apiUrl + 'user-device/returning-device', { headers: getHeaders(), params }).pipe(
       tap(response => {
         console.log(response);
       }),
@@ -76,13 +65,8 @@ export class UserService {
     if (pageable.direction) {
       params = params.set('direction', pageable.direction);
     }
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
     console.log( this.currentUserId)
-    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'user/' + this.currentUserId + '/devices', { headers, params }).pipe(
+    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'user/' + this.currentUserId + '/devices', { headers: getHeaders(), params }).pipe(
       tap(response => {
         console.log(response);
       }),
@@ -93,12 +77,7 @@ export class UserService {
   }
 
   changePassword(id: string, userData: {oldPassword: string,newPassword: string}) {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/password",userData , {headers}).pipe(
+    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/password",userData , {headers: getHeaders()}).pipe(
       tap(
         response => {
           console.log(response);
@@ -110,12 +89,7 @@ export class UserService {
   }
 
   getUserById(id: string): Observable<ResponseApi<User>> {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.get<ResponseApi<User>>(this.apiUrl + 'user/' + id, { headers }).pipe(
+    return this.http.get<ResponseApi<User>>(this.apiUrl + 'user/' + id, { headers: getHeaders() }).pipe(
       tap(response => {
         console.log(response)
       }
@@ -128,12 +102,8 @@ export class UserService {
 
   updateUser(id: string, userData: {username: string, password: string, role: string }) {
     const {username, password, role } = userData;
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/" + id, {username, password, role }, {headers}).pipe(
+
+    return this.http.put<ResponseApi<User>>(this.apiUrl + "user/" + id, {username, password, role }, {headers: getHeaders()}).pipe(
       tap(
         response => {
           console.log(response);
@@ -147,12 +117,7 @@ export class UserService {
 
   createUser(userData: {username: string, password: string, role: string }) {
     const {username, password, role} = userData;
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<ResponseApi<User>>(this.apiUrl + "user", {username, password, role }, {headers}).pipe(
+    return this.http.post<ResponseApi<User>>(this.apiUrl + "user", {username, password, role }, {headers: getHeaders()}).pipe(
       tap(
         response => {
           console.log(response);
@@ -164,12 +129,7 @@ export class UserService {
   }
 
   assignDevice(deviceId: string, userId: string): Observable<ResponseApi<Assignment>> {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post<ResponseApi<Assignment>>(this.apiUrl + "assignment", {userId, deviceId}, {headers}).pipe(
+    return this.http.post<ResponseApi<Assignment>>(this.apiUrl + "assignment", {userId, deviceId}, {headers: getHeaders()}).pipe(
       tap(
         response => {
           console.log(response);
@@ -181,12 +141,8 @@ export class UserService {
   }
 
   deleteUser(id: string): Observable<ResponseApi<string>> {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.delete<ResponseApi<string>>(this.apiUrl + 'user/' + id, { headers }).pipe(
+
+    return this.http.delete<ResponseApi<string>>(this.apiUrl + 'user/' + id, { headers: getHeaders() }).pipe(
       tap(response => {
       }
       ), catchError(error => {
@@ -197,16 +153,10 @@ export class UserService {
   }
 
   returnDevice(id: string): Observable<ResponseApi<string>> {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    console.log(token);
     return this.http.put<ResponseApi<string>>(
       `${this.apiUrl}assignment/${id}/return`,  
       {}, 
-      { headers } 
+      { headers: getHeaders() } 
     ).pipe(
       tap(response => console.log("API Response:", response)),
       catchError(error => {
@@ -217,16 +167,10 @@ export class UserService {
   }
 
   confirmDevice(id: string): Observable<ResponseApi<string>> {
-    const token = localStorage.getItem(this.tokenKey) || '';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    console.log(token);
     return this.http.put<ResponseApi<string>>(
       `${this.apiUrl}assignment/${id}/confirm`,  
       {}, 
-      { headers } 
+      { headers: getHeaders() } 
     ).pipe(
       tap(response => console.log("API Response:", response)),
       catchError(error => {
