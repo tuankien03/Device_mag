@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface UserDeviceRepository extends JpaRepository<UserDevice, UUID> {
-    Page<UserDevice> findAllByUserId(UUID userId, Pageable pageable);
+    Page<UserDevice> findAllByUserIdAndReturnedAtIsNull(UUID userId, Pageable pageable);
+    Page<UserDevice> findAllByUserIdAndReturnedAtIsNotNull(UUID userId, Pageable pageable);
     Page<UserDevice> findAllByStatusDeviceAndReturnedAtIsNull(DeviceStatus statusDevice, Pageable pageable);
 }

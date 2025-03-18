@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   isEditMode: boolean = false;
-  
+
 
   constructor(
     private fb: FormBuilder,
@@ -21,27 +21,35 @@ export class UserFormComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data: any, 
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
 
   ngOnInit(): void {
     this.isEditMode = !!this.data;
     this.userForm = this.fb.group({
-      username: [{ value: this.data?.username || '', disabled: !!this.data }, Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{8,16}$')],
-      role: [{value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id}, Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]]
+      username: [
+        { value: this.data?.username || '', disabled: !!this.data },
+        [Validators.required, Validators.minLength(8), Validators.pattern('^[a-zA-Z0-9]{8,16}$')]
+      ], 
+      role: [{ value: this.data?.role || 'USER', disabled: this.authService.getUserId() === this.data?.id }, Validators.required],
+      password: [
+        null,
+        this.isEditMode 
+          ? [Validators.minLength(6), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]
+          : [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]
+      ]
     });
   }
 
   onSubmit() {
     if (this.userForm.valid) {
-      const  result = this.userForm.getRawValue();
+      const result = this.userForm.getRawValue();
       if (this.data) {
         this.userService.updateUser(this.data.id, result).subscribe(
           (data) => {
-            this.messageService.addMessage({message: "Sửa user thành công", status: true});
-            this.dialogRef.close(data); 
+            this.messageService.addMessage({ message: "Sửa user thành công", status: true });
+            this.dialogRef.close(data);
           }, (error) => {
             console.log(error)
             this.messageService.addMessage({ message: error.message, status: false });
@@ -50,8 +58,8 @@ export class UserFormComponent implements OnInit {
       } else {
         this.userService.createUser(result).subscribe(
           (data) => {
-            this.messageService.addMessage({message: "Tạo user thành công", status: true});
-            this.dialogRef.close(data); 
+            this.messageService.addMessage({ message: "Tạo user thành công", status: true });
+            this.dialogRef.close(data);
           }, (error) => {
             this.messageService.addMessage({ message: error.message, status: false });
           }

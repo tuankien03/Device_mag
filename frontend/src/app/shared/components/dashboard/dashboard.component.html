@@ -36,7 +36,10 @@
             </div>
 
             <div *ngIf="role === 'USER'">
-                <a mat-button routerLink="borrowed-devices" class="side-menu-item"><mat-icon>send_to_mobile</mat-icon> Thiết bị đã mượn </a>
+                <a mat-button routerLink="borrowed-devices" class="side-menu-item"><mat-icon>send_to_mobile</mat-icon> Thiết bị đang mượn </a>
+            </div>
+            <div *ngIf="role === 'USER'">
+                <a mat-button routerLink="history-devices" class="side-menu-item"><mat-icon>send_to_mobile</mat-icon> Thiết bị đã mượn </a>
             </div>
             
         </div>

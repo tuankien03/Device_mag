@@ -33,15 +33,7 @@
       <mat-label>Mật khẩu mới</mat-label>
       <input matInput type="password" formControlName="newPassword" placeholder="Nhập mật khẩu mới">
       <mat-error *ngIf="userForm.get('newPassword')?.touched && userForm.get('newPassword')?.invalid">
-        <span *ngIf="userForm.get('newPassword')?.errors?.required">
-          Mật khẩu là bắt buộc
-        </span>
-        <span *ngIf="userForm.get('newPassword')?.errors?.minlength">
-          Mật khẩu phải có ít nhất 6 kí tự
-        </span>
-        <span *ngIf="userForm.get('newPassword')?.errors?.pattern">
-          Phải có ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự 
-        </span>
+        {{getNewPasswordError()}}
       </mat-error>      
     </mat-form-field>
     <mat-form-field appearance="outline">

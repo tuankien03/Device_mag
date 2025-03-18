@@ -76,6 +76,25 @@ export class UserService {
     );
   }
 
+  getHistoryDevices(pageable: Pageable): Observable<ResponseApi<PageResponse<Device[]>>> {
+    let params = new HttpParams().set('page', pageable.pageNumber.toString()).set('size', pageable.pageSize.toString());
+    if (pageable.property) {
+      params = params.set('property', pageable.property);
+    }
+    if (pageable.direction) {
+      params = params.set('direction', pageable.direction);
+    }
+    console.log( this.currentUserId)
+    return this.http.get<ResponseApi<PageResponse<Device[]>>>(this.apiUrl + 'user/' + this.currentUserId + '/history', { headers: getHeaders(), params }).pipe(
+      tap(response => {
+        console.log(response);
+      }),
+      catchError(error => {
+        throw error.error;
+      })
+    );
+  }
+
   changePassword(id: string, userData: {oldPassword: string,newPassword: string}) {
     return this.http.put<ResponseApi<User>>(this.apiUrl + "user/password",userData , {headers: getHeaders()}).pipe(
       tap(

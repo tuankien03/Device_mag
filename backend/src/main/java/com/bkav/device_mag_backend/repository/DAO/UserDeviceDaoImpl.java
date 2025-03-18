@@ -31,7 +31,13 @@ public class UserDeviceDaoImpl implements IUserDeviceDAO {
 
     @Override
     public PageResponse<UserDeviceResponseDTO> getUserDeviceByUserId(UUID userId, Pageable pageable) {
-        Page<UserDevice> userDevices = userDeviceRepository.findAllByUserId(userId,pageable);
+        Page<UserDevice> userDevices = userDeviceRepository.findAllByUserIdAndReturnedAtIsNull(userId,pageable);
+        return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
+    }
+
+    @Override
+    public PageResponse<UserDeviceResponseDTO> getHistoryOfDeviceByUserId(UUID userId, Pageable pageable) {
+        Page<UserDevice> userDevices = userDeviceRepository.findAllByUserIdAndReturnedAtIsNotNull(userId,pageable);
         return getUserDeviceResponseDTOPageResponse(pageable, userDevices);
     }
 

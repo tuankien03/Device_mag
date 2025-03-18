@@ -72,8 +72,14 @@ public class UserService implements IUserService {
             }
         });
         }
-        String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
-        saveUserRequestDTO.setPassword(encodedPassword);
+
+        if(saveUserRequestDTO.getPassword() != null) {
+            String encodedPassword = passwordEncoder.encode(saveUserRequestDTO.getPassword());
+            saveUserRequestDTO.setPassword(encodedPassword);
+        } else {
+            UserAuthentication userAuthentication = userDaoImpl.findUserByUsername(saveUserRequestDTO.getUsername());
+            saveUserRequestDTO.setPassword(userAuthentication.getPassword());
+        }
         return userDaoImpl.save(saveUserRequestDTO);
     }
 
@@ -85,6 +91,9 @@ public class UserService implements IUserService {
         UserAuthentication current_user = userDaoImpl.findUserByUsername(authentication.getName());
         if (!passwordEncoder.matches(changePasswordRequestDTO.getOldPassword(), current_user.getPassword())) {
             throw new BadRequestException("Mật khẩu cũ không đúng");
+        }
+        if (passwordEncoder.matches(changePasswordRequestDTO.getNewPassword(), current_user.getPassword())) {
+            throw new BadRequestException("Mật khẩu mới trùng với mật khẩu cũ");
         }
         SaveUserRequestDTO saveUserRequestDTO = new SaveUserRequestDTO();
         saveUserRequestDTO.setUsername(current_user.getUsername());

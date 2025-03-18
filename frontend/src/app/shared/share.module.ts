@@ -35,6 +35,7 @@ import { ReturningDeviceComponent } from './components/returning-device/returnin
 import { UserSelectionDialogComponent } from './components/user-selection-dialog/user-selection-dialog.component';
 import { AssignedDevicesComponent } from './components/assigned-devices/assigned-devices.component';
 import { ChangeUserinforFormComponent } from './components/change-userinfor-form/change-userinfor-form.component';
+import { HistoryDevicesOfUserComponent } from './components/history-devices-of-user/history-devices-of-user.component';
 
 
 
@@ -42,7 +43,7 @@ import { ChangeUserinforFormComponent } from './components/change-userinfor-form
 
 
 @NgModule({
-  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent  , BorrowedDevicesComponent, AvailableDevicesComponent, ConfirmDialogComponent, NotfoudPageComponent, RedirectComponent, ReturningDeviceComponent, UserSelectionDialogComponent, AssignedDevicesComponent, ChangeUserinforFormComponent],
+  declarations: [MessageComponent, MessageItemComponent , SidebarComponent, DashboardComponent, DevicesComponent, UserComponent, TableComponent, UserFormComponent, DeviceFormComponent  , BorrowedDevicesComponent, AvailableDevicesComponent, ConfirmDialogComponent, NotfoudPageComponent, RedirectComponent, ReturningDeviceComponent, UserSelectionDialogComponent, AssignedDevicesComponent, ChangeUserinforFormComponent, HistoryDevicesOfUserComponent],
   imports: [
     CommonModule,MatInputModule,
     MatCardModule,

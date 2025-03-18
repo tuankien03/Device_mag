@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from '../../model/user';
+import { User, UserRole } from '../../model/user';
 import { UserService } from '../../service/user.service';
 
 @Component({
@@ -23,10 +23,12 @@ export class UserSelectionDialogComponent implements OnInit {
 
 
   ngOnInit() {
+    this.filteredUsers  = this.filterUsers();
     this.searchControl.valueChanges.subscribe(value => {
       this.userService.getUsers({ pageNumber: 1, pageSize: 10 }, value.trim()).pipe(
       ).subscribe((response) => {
         this.filteredUsers = response.body.data;
+        this.filteredUsers  = this.filterUsers();
       }
       );
     });
@@ -35,6 +37,13 @@ export class UserSelectionDialogComponent implements OnInit {
   selectUser(user: User) {
     this.selectedUser = user;
   }
+
+  filterUsers(): User[] {
+    return this.filteredUsers
+      ? this.filteredUsers.filter((user: User) => user.role === UserRole.User)
+      : [];
+  }
+  
 
   confirmSelection() {
     this.dialogRef.close(this.selectedUser);

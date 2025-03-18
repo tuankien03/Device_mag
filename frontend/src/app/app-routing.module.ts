@@ -12,6 +12,7 @@ import { NotfoudPageComponent } from './shared/components/notfoud-page/notfoud-p
 import { RedirectComponent } from './shared/components/redirect/redirect.component';
 import { ReturningDeviceComponent } from './shared/components/returning-device/returning-device.component';
 import { AssignedDevicesComponent } from './shared/components/assigned-devices/assigned-devices.component';
+import { HistoryDevicesOfUserComponent } from './shared/components/history-devices-of-user/history-devices-of-user.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: RedirectComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
       {path: 'available-devices', component: AvailableDevicesComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
       {path: 'current-assignment', component: AssignedDevicesComponent, canActivate: [RoleGuard], data: { role: 'ADMIN'}},
       {path: 'borrowed-devices', component: BorrowedDevicesComponent, canActivate: [RoleGuard], data: { role: 'USER'}},
+      {path: 'history-devices', component: HistoryDevicesOfUserComponent, canActivate: [RoleGuard], data: { role: 'USER'}},
 
     ],
     canActivate: [AuthGuard]

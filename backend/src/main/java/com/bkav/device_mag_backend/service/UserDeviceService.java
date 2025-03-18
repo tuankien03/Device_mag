@@ -26,6 +26,11 @@ public class UserDeviceService implements IUserDeviceService {
     }
 
     @Override
+    public PageResponse<UserDeviceResponseDTO> getHistoryOfDeviceByUserId(UUID userId, Pageable pageable) {
+        return userDeviceDaoImpl.getHistoryOfDeviceByUserId(userId,pageable);
+    }
+
+    @Override
     public PageResponse<UserDeviceResponseDTO> findAllReturningUserDevices(Pageable pageable) {
         return userDeviceDaoImpl.getReturningUserDevices(pageable);
     }

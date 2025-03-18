@@ -24,7 +24,7 @@ export class DeviceFormComponent implements OnInit {
   ngOnInit() {
     this.deviceForm = this.fb.group({
       name: [this.data?.name || '', Validators.required],
-      description: [this.data?.description || ''],
+      description: [this.data?.description || '', Validators.required],
       status: [{ value: this.data?.status || "AVAILABLE", disabled: true }, Validators.required]
     });
   }

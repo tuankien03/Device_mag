@@ -51,6 +51,20 @@ export class ChangeUserinforFormComponent implements OnInit {
     }
   }
 
+
+  getNewPasswordError() {
+    if (this.userForm.get('newPassword')?.hasError('required')) {
+      return "Vui lòng nhập mật khẩu mới";
+    }
+    if (this.userForm.get('newPassword')?.hasError('minlength')) {
+      return "Mật khẩu phải có ít nhất 6 ký tự";
+    }
+    if (this.userForm.get('newPassword')?.hasError('pattern')) {
+      return "Phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự";
+    }
+    return "";
+  }
+
   getConfirmPasswordError() {
     if (this.userForm.get('confirmPassword')?.hasError('required')) {
       return "Vui lòng nhập xác nhận mật khẩu";

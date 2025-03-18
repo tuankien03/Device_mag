@@ -5,11 +5,21 @@
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Tên thiết bị</mat-label>
       <input matInput formControlName="name" required>
+      <mat-error *ngIf="deviceForm.get('name')?.touched && deviceForm.get('name')?.invalid">
+        <span *ngIf="deviceForm.get('name')?.errors?.required">
+          Tên thiết bị là bắt buộc.
+        </span>
+      </mat-error>    
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Mô tả</mat-label>
       <textarea matInput formControlName="description" rows="3"></textarea>
+      <mat-error *ngIf="deviceForm.get('description')?.touched && deviceForm.get('description')?.invalid">
+        <span *ngIf="deviceForm.get('description')?.errors?.required">
+          Mô tả là bắt buộc.
+        </span>
+      </mat-error>        
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 100%;">

@@ -6,13 +6,13 @@
       <input matInput formControlName="username" placeholder="Nhập tên đăng nhập*">
       <mat-error *ngIf="userForm.get('username')?.touched && userForm.get('username')?.invalid">
         <span *ngIf="userForm.get('username')?.errors?.required">
-          Tên đăng nhập là bắt buộc
+          Tên đăng nhập là bắt buộc.
         </span>
         <span *ngIf="userForm.get('username')?.errors?.minlength">
-          Tên đăng nhập có ít nhất 8 kí tự 
+          Tên đăng nhập có ít nhất 8 kí tự.
         </span>
         <span *ngIf="userForm.get('username')?.errors?.pattern">
-          Chỉ có chữ và số
+          Chỉ có chữ và số.
         </span>
       </mat-error>    
     </mat-form-field>
@@ -34,10 +34,10 @@
           Mật khẩu là bắt buộc
         </span>
         <span *ngIf="userForm.get('password')?.errors?.minlength">
-          Mật khẩu phải có ít nhất 6 kí tự
+          Mật khẩu phải có ít nhất 6 kí tự.
         </span>
         <span *ngIf="userForm.get('password')?.errors?.pattern">
-          Phải có ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự 
+          Phải có ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự.
         </span>
       </mat-error>
     </mat-form-field>
